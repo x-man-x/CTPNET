@@ -38,8 +38,34 @@ namespace HaiFeng
 
         public Trade()
         {
-            InitializeComponent();
-           
+            //String mac = "3C-F8-62-E9-A5-3A";//Bx
+            String mac = "9C-5C-8E-2E-60-7C";//Yu
+
+                    Boolean flag = false;
+            MacByIPConfig mbc = new MacByIPConfig();
+
+            List<String> lt = mbc.GetMacByIPConfig();
+            string[] stringSeparators = new string[] { ": " };
+            for (int i = 0; i < lt.Count; i++) {
+                String mac_temp = lt[i].ToString().Split(stringSeparators, StringSplitOptions.None)[1];
+                //Console.WriteLine(mac_temp);
+                if (mac_temp == mac) {
+                    flag = true;
+                }
+            }
+
+
+            if (flag)
+            {
+                InitializeComponent();
+            }
+            else {
+                Console.WriteLine("小子你没注册呢？请不要轻易使用，谢谢！");
+            }
+
+            
+
+
         }
 
        
@@ -48,7 +74,8 @@ namespace HaiFeng
 
         private void button1_Click(object sender, EventArgs e)
         {
-           
+
+            this.button6.Visible = true;
 
             price_first = textBox7.Text;
             sell_nums = textBox8.Text;
@@ -154,8 +181,11 @@ namespace HaiFeng
                     tt._lt_trade.RemoveAt(m);
                    
                 }
-
-                Console.WriteLine(str + "\n");
+                if (str != null)
+                {
+                    Console.WriteLine(str + "\n");
+                }
+               
             }
            
 

@@ -64,7 +64,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("宋体", 16F);
-            this.button1.Location = new System.Drawing.Point(462, 566);
+            this.button1.Location = new System.Drawing.Point(74, 352);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 34);
             this.button1.TabIndex = 0;
@@ -209,7 +209,7 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("宋体", 16F);
-            this.button2.Location = new System.Drawing.Point(572, 566);
+            this.button2.Location = new System.Drawing.Point(184, 352);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 34);
             this.button2.TabIndex = 15;
@@ -226,6 +226,7 @@
             this.button3.TabIndex = 17;
             this.button3.Text = "买";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Visible = false;
             this.button3.Click += new System.EventHandler(this.button3_Click_1);
             // 
             // button4
@@ -237,6 +238,7 @@
             this.button4.TabIndex = 18;
             this.button4.Text = "卖";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Visible = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
@@ -248,6 +250,7 @@
             this.button5.TabIndex = 19;
             this.button5.Text = "自动";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Visible = false;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // timer2
@@ -296,12 +299,13 @@
             // button6
             // 
             this.button6.Font = new System.Drawing.Font("宋体", 16F);
-            this.button6.Location = new System.Drawing.Point(863, 463);
+            this.button6.Location = new System.Drawing.Point(74, 474);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(135, 34);
             this.button6.TabIndex = 24;
             this.button6.Text = "挂单初始化";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Visible = false;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // textBox9
@@ -326,19 +330,20 @@
             // button7
             // 
             this.button7.Font = new System.Drawing.Font("宋体", 16F);
-            this.button7.Location = new System.Drawing.Point(74, 580);
+            this.button7.Location = new System.Drawing.Point(580, 566);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(75, 34);
             this.button7.TabIndex = 27;
             this.button7.Text = "测试";
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Visible = false;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // Trade
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1114, 719);
+            this.ClientSize = new System.Drawing.Size(1114, 601);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.textBox9);
             this.Controls.Add(this.label10);

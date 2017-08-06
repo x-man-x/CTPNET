@@ -121,7 +121,7 @@ namespace HaiFeng
 
         private void _q_OnRtnTick(object sender, TickEventArgs e)
         {
-           // Log($"Tick::::::: {e.Tick.InstrumentID}\t{e.Tick.LastPrice}");
+             Log($"Tick::::::: {e.Tick.InstrumentID}\t{e.Tick.LastPrice}");
             _NowPrice = e.Tick.LastPrice.ToString();
         }
         //private void _q_OnRtnQuote(object sender, QuotedataEventArgs e)
