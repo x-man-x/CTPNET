@@ -74,8 +74,10 @@
     <Compile Include="EnumDescriptionAttribute.cs" />
     <Compile Include="EventArgs.cs" />
     <Compile Include="InstrumentField.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="MarketData.cs" />
     <Compile Include="OrderField.cs" />
+    <Compile Include="PlatformInfo.cs" />
     <Compile Include="PositionField.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

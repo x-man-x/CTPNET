@@ -21,8 +21,10 @@ namespace HaiFeng
         public string _tcp_trade_offset = null;
         public string _tcp_trade_price = null;
 
-        public List<OrderField> _lt_trade = new List<OrderField>();
+        public List<OrderField> _lt_submit_order = new List<OrderField>();
+        public List<OrderField> _lt_submit_order_success = new List<OrderField>();
         public List<TradeField> _lt_trade_success = new List<TradeField>();
+      
 
 
 
@@ -86,18 +88,22 @@ namespace HaiFeng
         {
            // 11:03:27.6670057        _t_OnRtnOrderm1801 Buy     Open    2889    1       1089408166 | 1 | 000030001000           10043369    全部成交
            // 11:03:27.6689683        _t_OnRtnTrade: m1801 Buy     Open    2879    1
-            Log($"_t_OnRtnTrade 成交:{e.Value.InstrumentID}\t{e.Value.Direction}\t{e.Value.Offset}\t{e.Value.Price}\t{e.Value.Volume}");
+            Log($"OnRtnTrade 交易成交:{e.Value.InstrumentID}\t{e.Value.Direction}\t{e.Value.Offset}\t{e.Value.Price}\t{e.Value.Volume}");
             _lt_trade_success.Add((TradeField)e.Value);
         }
 
         private void _t_OnRtnOrder(object sender, OrderArgs e)
         {
-            Log($"_t_OnRtnOrder 挂单：{e.Value.InstrumentID}\t{e.Value.Direction}\t{e.Value.Offset}\t{e.Value.LimitPrice}\t{e.Value.Volume}\t{e.Value.OrderID}\t{e.Value.SysID}\t{e.Value.StatusMsg}");
-            Log(e.Value.StatusMsg);
-            if (e.Value.StatusMsg == "全部成交") {
-                _lt_trade.Add((OrderField)e.Value);
-            }
+            Log($"OnRtnOrder 挂单：{e.Value.InstrumentID}\t{e.Value.Direction}\t{e.Value.Offset}\t{e.Value.LimitPrice}\t{e.Value.Volume}\t{e.Value.OrderID}\t{e.Value.SysID}\t{e.Value.StatusMsg}");
             
+            if (e.Value.StatusMsg == "全部成交")
+            {
+                _lt_submit_order_success.Add((OrderField)e.Value);
+            }
+            else
+            {
+                _lt_submit_order.Add((OrderField)e.Value);
+            }
             
             //if (e.Value.IsLocal)
             //    _t.ReqOrderAction(e.Value.OrderID);
@@ -114,7 +120,7 @@ namespace HaiFeng
             Log("End Show Info!");
 
             foreach (var posi in _t.DicPositionField.Values)
-                Log("Show Info data:" + posi.ToString());
+            Log("Show Info data:" + posi.ToString());
         }
 
         private void _t_OnRspUserLogin(object sender, IntEventArgs e)
@@ -134,6 +140,7 @@ namespace HaiFeng
             {
                 Log($"登录错误：{e.Value}");
             }
+
         }
        
         private void OnRtnInstrumentStatus(ref CThostFtdcInstrumentStatusField pInstrumentStatus)
@@ -168,6 +175,10 @@ namespace HaiFeng
         public void sell_btn_Close(double price)
         {
             _t.ReqOrderInsert(_sub1, DirectionType.Sell, OffsetType.Close, price, 1, 1000);
+            
+        }
+
+        public void getList() {
             
         }
         
