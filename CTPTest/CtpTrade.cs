@@ -24,7 +24,8 @@ namespace HaiFeng
         public List<OrderField> _lt_submit_order = new List<OrderField>();
         public List<OrderField> _lt_submit_order_success = new List<OrderField>();
         public List<TradeField> _lt_trade_success = new List<TradeField>();
-      
+
+        public Dictionary<string, OrderField> idToOrderMap = new Dictionary<string, OrderField>();
 
 
 
@@ -95,7 +96,8 @@ namespace HaiFeng
         private void _t_OnRtnOrder(object sender, OrderArgs e)
         {
             Log($"OnRtnOrder 挂单：{e.Value.InstrumentID}\t{e.Value.Direction}\t{e.Value.Offset}\t{e.Value.LimitPrice}\t{e.Value.Volume}\t{e.Value.OrderID}\t{e.Value.SysID}\t{e.Value.StatusMsg}");
-            
+            OrderField orderField = e.Value;
+            this.idToOrderMap[orderField.OrderID] = orderField;
             if (e.Value.StatusMsg == "全部成交")
             {
                 _lt_submit_order_success.Add((OrderField)e.Value);

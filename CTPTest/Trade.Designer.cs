@@ -173,7 +173,7 @@
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(100, 32);
             this.textBox5.TabIndex = 10;
-            this.textBox5.Text = "SR801";
+            this.textBox5.Text = "SR805";
             this.textBox5.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
             // 
             // textBox6
@@ -271,7 +271,7 @@
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(135, 32);
             this.textBox7.TabIndex = 20;
-            this.textBox7.Text = "6160";
+            this.textBox7.Text = "5597";
             // 
             // label8
             // 

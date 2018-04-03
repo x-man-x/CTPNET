@@ -155,7 +155,7 @@ namespace HaiFeng
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
             price = int.Parse(ctpQuote.NowPrice);
             this.textBox6.Text = price.ToString();
             this.Refresh();
@@ -169,10 +169,14 @@ namespace HaiFeng
             submit_order_success_list = ctpTrade._lt_submit_order_success;
            
             String str = null;
-            if (submit_order_success_list != null)
+            if (submit_order_success_list != null && submit_order_success_list.Count>0)
             {
-                for (int m = 0; m < submit_order_success_list.Count; m++)
+                OrderField tempOrderField;
+                string tempOrderId;
+                for (int m = submit_order_success_list.Count-1; m>=0; m--)
                 {
+                    tempOrderField = submit_order_success_list[m];
+                    tempOrderId = tempOrderField.OrderID;
                     str = str + submit_order_success_list[m].InstrumentID + "..." + submit_order_success_list[m].Direction + "..." + submit_order_success_list[m].Offset + "..." + submit_order_success_list[m].LimitPrice+"\n";
 
                     if (submit_order_success_list[m].Direction == DirectionType.Sell)
@@ -197,14 +201,15 @@ namespace HaiFeng
                             ctpTrade.sell_btn_Open(submit_order_success_list[m].LimitPrice + 1);
                         }
                     }
+
                     ctpTrade._lt_submit_order_success.RemoveAt(m);
 
-                    double remove_Price = submit_order_success_list[m].LimitPrice;
                     for (int n= 0; n < ctpTrade._lt_submit_order.Count; n++)
                     {
-                        if (ctpTrade._lt_submit_order[n].LimitPrice == remove_Price)
+                        if (ctpTrade._lt_submit_order[n].OrderID == tempOrderId)
                         {
                             ctpTrade._lt_submit_order.RemoveAt(n);
+                            break;
                         }
                     }
                 }//for
