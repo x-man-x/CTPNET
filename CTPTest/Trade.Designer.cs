@@ -62,6 +62,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.label12 = new System.Windows.Forms.Label();
+            this.testSaveOpenOrdersButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -385,11 +386,23 @@
             this.label12.Text = "挂单情况：";
             this.label12.Click += new System.EventHandler(this.label12_Click);
             // 
+            // testSaveOpenOrdersButton
+            // 
+            this.testSaveOpenOrdersButton.Font = new System.Drawing.Font("宋体", 16F);
+            this.testSaveOpenOrdersButton.Location = new System.Drawing.Point(547, 715);
+            this.testSaveOpenOrdersButton.Name = "testSaveOpenOrdersButton";
+            this.testSaveOpenOrdersButton.Size = new System.Drawing.Size(142, 34);
+            this.testSaveOpenOrdersButton.TabIndex = 32;
+            this.testSaveOpenOrdersButton.Text = "测试保存定单";
+            this.testSaveOpenOrdersButton.UseVisualStyleBackColor = true;
+            this.testSaveOpenOrdersButton.Click += new System.EventHandler(this.testSaveOpenOrdersButton_Click);
+            // 
             // Trade
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1029, 809);
+            this.Controls.Add(this.testSaveOpenOrdersButton);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.label11);
@@ -464,5 +477,6 @@
         private System.Windows.Forms.TextBox textBox10;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.Button testSaveOpenOrdersButton;
     }
 }

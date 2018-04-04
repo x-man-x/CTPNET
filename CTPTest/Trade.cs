@@ -44,6 +44,7 @@ namespace HaiFeng
 
         public Trade()
         {
+            // C:\Users\wkjy\Desktop\CTPNET\CTPTest\Debug\
             root_dir = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
            
              String mac = "3C-F8-62-E9-A5-3A";//Bx
@@ -383,6 +384,31 @@ namespace HaiFeng
 
         private void textBox5_TextChanged(object sender, EventArgs e)
         {
+
+        }
+
+        private void testSaveOpenOrdersButton_Click(object sender, EventArgs e)
+        {
+            OrderField orderField1 = new OrderField() {
+                OrderID="1",
+                Direction= DirectionType.Buy,
+                Offset = OffsetType.Open
+            };
+            OrderField orderField2 = new OrderField()
+            {
+                OrderID = "2",
+                Direction = DirectionType.Sell,
+                Offset = OffsetType.Close
+            };
+            string path = "d:\\temp\\";
+            IList<OrderField> orderList = new List<OrderField>();
+            orderList.Add(orderField1);
+            orderList.Add(orderField2);
+
+            this.fileAction.WriteOpenOrders(path,orderList);
+
+            IList<OrderField> observedOrderList = this.fileAction.ReadOpenOrders(path);
+            Console.Write(observedOrderList);
 
         }
     } // class

@@ -4,11 +4,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 
 namespace HaiFeng
 {
     class FileAction
     {
+        JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
+        string openOrdersFileName = "open-orders.json";
         // private string Tcp_ip_quote = null;
         // private string Tcp_ip_trade = null;
         //private string Sub = null;
@@ -102,6 +105,50 @@ namespace HaiFeng
             fs.Flush();
             fs.Close();
             return true;
+        }
+
+        public Boolean WriteOpenOrders(string path, IList<OrderField> openOrderList)
+        {
+            string filePath = path + this.openOrdersFileName;
+            string openOrderString = this.javaScriptSerializer.Serialize(openOrderList);
+            //FileStream fs = new FileStream(path + this.openOrdersFileName, FileMode.Create);
+            ////获得字节数组
+
+            //byte[] data = System.Text.Encoding.Default.GetBytes(openOrderString);
+            ////开始写入
+            //fs.Write(data, 0, data.Length);
+
+            ////清空缓冲区、关闭流
+            //fs.Flush();
+            //fs.Close();
+            using (StreamWriter streamWriter = new StreamWriter(filePath, false, Encoding.UTF8))
+            {
+                streamWriter.Write(openOrderString);
+            }
+            return true;
+        }
+
+        public IList<OrderField> ReadOpenOrders(string path)
+        {
+            string filePath = path + this.openOrdersFileName;
+            if (!File.Exists(filePath))
+            {
+                return new List<OrderField>(0);
+            }
+            using (StreamReader sr = new StreamReader(filePath, Encoding.Default))
+            {
+                string openOrdersString = sr.ReadToEnd();
+                if (openOrdersString == null || openOrdersString.Trim().Length > 0)
+                {
+                    IList<OrderField> openOrderList = this.javaScriptSerializer.Deserialize<IList<OrderField>>(openOrdersString);
+                    return openOrderList;
+                }
+                else
+                {
+                    return new List<OrderField>(0);
+                }
+            }
+
         }
 
 
