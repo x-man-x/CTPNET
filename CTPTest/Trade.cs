@@ -130,7 +130,6 @@ namespace HaiFeng
             {
                 ctpQuote.Run();
                 ctpTrade.Run();
-                timer1.Start();
             }
 
         }
@@ -157,10 +156,12 @@ namespace HaiFeng
         private void timer1_Tick(object sender, EventArgs e)
         {
             //Thread.Sleep(1000);
-            price = int.Parse(ctpQuote.NowPrice);
+            // todo: revert when trading.
+            //price = int.Parse(ctpQuote.NowPrice);
+            price = 1;
             this.textBox6.Text = price.ToString();
             this.Refresh();
-            
+
             // Console.WriteLine("................开始...................");
 
             //lt_trade = tt._lt_trade;
@@ -168,17 +169,17 @@ namespace HaiFeng
             //lt_submit_success = tt._lt_submit_success;
 
             submit_order_success_list = ctpTrade._lt_submit_order_success;
-           
+
             String str = null;
-            if (submit_order_success_list != null && submit_order_success_list.Count>0)
+            if (submit_order_success_list != null && submit_order_success_list.Count > 0)
             {
                 OrderField tempOrderField;
                 string tempOrderId;
-                for (int m = submit_order_success_list.Count-1; m>=0; m--)
+                for (int m = submit_order_success_list.Count - 1; m >= 0; m--)
                 {
                     tempOrderField = submit_order_success_list[m];
                     tempOrderId = tempOrderField.OrderID;
-                    str = str + submit_order_success_list[m].InstrumentID + "..." + submit_order_success_list[m].Direction + "..." + submit_order_success_list[m].Offset + "..." + submit_order_success_list[m].LimitPrice+"\n";
+                    str = str + submit_order_success_list[m].InstrumentID + "..." + submit_order_success_list[m].Direction + "..." + submit_order_success_list[m].Offset + "..." + submit_order_success_list[m].LimitPrice + "\n";
 
                     if (submit_order_success_list[m].Direction == DirectionType.Sell)
                     {
@@ -205,7 +206,7 @@ namespace HaiFeng
 
                     ctpTrade._lt_submit_order_success.RemoveAt(m);
 
-                    for (int n= 0; n < ctpTrade._lt_submit_order.Count; n++)
+                    for (int n = 0; n < ctpTrade._lt_submit_order.Count; n++)
                     {
                         if (ctpTrade._lt_submit_order[n].OrderID == tempOrderId)
                         {
@@ -220,37 +221,38 @@ namespace HaiFeng
                     Console.WriteLine(str + "\n");
                 }
             }//if
-
             submit_order_list = ctpTrade._lt_submit_order;
+
+            this.fileAction.WriteOpenOrders(root_dir, submit_order_list);
             trade_success_list = ctpTrade._lt_trade_success;
-            
+
             String Title1 = "Part I 挂单提交成功\n";
             String List_submit_order = null;
             for (int m = 0; m < submit_order_list.Count; m++)
             {
-                List_submit_order = List_submit_order + submit_order_list[m].OrderID + "---" + submit_order_list[m].LimitPrice+"\n";
+                List_submit_order = List_submit_order + submit_order_list[m].OrderID + "---" + submit_order_list[m].LimitPrice + "\n";
             }//for
-            
+
             String Title2 = "Part II 挂单成功\n";
             String List_submit_order_success = null;
             for (int m = 0; m < submit_order_success_list.Count; m++)
             {
                 List_submit_order_success = List_submit_order_success + submit_order_success_list[m].OrderID + "---" + submit_order_success_list[m].LimitPrice + "\n";
             }
-            
+
             String Title3 = "Part III 交易成交\n";
             String List_trade_success = null;
             for (int m = 0; m < trade_success_list.Count; m++)
             {
                 List_trade_success = List_trade_success + trade_success_list[m].OrderID + "---" + trade_success_list[m].Price + "\n";
             }
-            
-            richTextBox1.Text = Title1+ List_submit_order + Title2+ List_submit_order_success + Title3+ List_trade_success;
+
+            richTextBox1.Text = Title1 + List_submit_order + Title2 + List_submit_order_success + Title3 + List_trade_success;
             //lt_trade;
             //lt_trade_success = tt._lt_trade_success;
 
             // Console.WriteLine("................结束...................");
-            
+
         }
 
         private void logoutButton_Click(object sender, EventArgs e)
@@ -344,21 +346,82 @@ namespace HaiFeng
             int sell_nums_ar = int.Parse(sell_nums);//卖单挂单数
             int buy_nums_ar = int.Parse(buy_nums);//买单挂单数
 
-            for (int i = 0; i < sell_nums_ar; i++)
+            IList<OrderField> openOrderList = this.fileAction.ReadOpenOrders(root_dir);
+            if (openOrderList.Count > 0)
             {
-                LogSave.log("卖单" + i + "..." + (price_first_int + i));
-                Console.WriteLine("卖单" + i + "..." + (price_first_int + i));
-                ctpTrade.sell_btn_Open(price_first_int + i + 1);  
-            }
+                IEnumerator<OrderField> openOrderEnumerator = openOrderList.GetEnumerator();
+                string logMessage;
+                while (openOrderEnumerator.MoveNext())
+                {
+                    OrderField tempOrderField = openOrderEnumerator.Current;
+                    if (tempOrderField.Direction == DirectionType.Buy)
+                    {
+                        if (tempOrderField.Offset == OffsetType.Close)
+                        {
+                            logMessage = "恢复定单：买平@" + tempOrderField.LimitPrice;
+                            LogSave.log(logMessage);
+                            Console.WriteLine(logMessage);
+                            ctpTrade.buy_btn_Close(tempOrderField.LimitPrice);
+                        }
+                        else if (tempOrderField.Offset == OffsetType.Open)
+                        {
+                            logMessage = "恢复定单：买开@" + tempOrderField.LimitPrice;
+                            LogSave.log(logMessage);
+                            Console.WriteLine(logMessage);
+                            ctpTrade.buy_btn_Open(tempOrderField.LimitPrice);
+                        }
+                        else
+                        {
+                            logMessage = "未知定单：" + tempOrderField.Offset + ",价格：" + tempOrderField.LimitPrice;
+                            LogSave.log(logMessage);
+                            Console.WriteLine(logMessage);
+                        }
+                    }
+                    else
+                    {
+                        if (tempOrderField.Offset == OffsetType.Close)
+                        {
+                            logMessage = "恢复定单：卖平@" + tempOrderField.LimitPrice;
+                            LogSave.log(logMessage);
+                            Console.WriteLine(logMessage);
+                            ctpTrade.sell_btn_Close(tempOrderField.LimitPrice);
+                        }
+                        else if (tempOrderField.Offset == OffsetType.Open)
+                        {
+                            logMessage = "恢复定单：卖开@" + tempOrderField.LimitPrice;
+                            LogSave.log(logMessage);
+                            Console.WriteLine(logMessage);
+                            ctpTrade.sell_btn_Open(tempOrderField.LimitPrice);
+                        }
+                        else
+                        {
+                            logMessage = "未知定单：" + tempOrderField.Offset + ",价格：" + tempOrderField.LimitPrice;
+                            LogSave.log(logMessage);
+                            Console.WriteLine(logMessage);
+                        }
+                    }
 
-            for (int j = 0; j < buy_nums_ar; j++)
+                }//while
+
+            }//if
+            else
             {
-                LogSave.log("买单" + j + "..." + (price_first_int - j));
-                Console.WriteLine("买单" + j + "..." + (price_first_int - j));
-                ctpTrade.buy_btn_Open(price_first_int - j - 1);
-                //  Thread.Sleep(20);
+                for (int i = 0; i < sell_nums_ar; i++)
+                {
+                    LogSave.log("卖单" + i + "..." + (price_first_int + i));
+                    Console.WriteLine("卖单" + i + "..." + (price_first_int + i));
+                    ctpTrade.sell_btn_Open(price_first_int + i + 1);
+                }
+
+                for (int j = 0; j < buy_nums_ar; j++)
+                {
+                    LogSave.log("买单" + j + "..." + (price_first_int - j));
+                    Console.WriteLine("买单" + j + "..." + (price_first_int - j));
+                    ctpTrade.buy_btn_Open(price_first_int - j - 1);
+                    //  Thread.Sleep(20);
+                }
             }
-            
+            timer1.Start();
         }
 
         private void button7_Click(object sender, EventArgs e)
