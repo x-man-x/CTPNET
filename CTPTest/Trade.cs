@@ -234,17 +234,25 @@ namespace HaiFeng
             }//for
 
             String Title2 = "Part II 挂单成功\n";
-            String List_submit_order_success = null;
-            for (int m = 0; m < submit_order_success_list.Count; m++)
+            IEnumerable<OrderField> filedOrderEnumerable = this.ctpTrade.idToOrderMap.Values
+                .Where(orderField => orderField.Status == OrderStatus.Filled)
+                .OrderBy(orderField => orderField.InsertTime)
+                ;
+            String List_submit_order_success = "";
+            int ordinal = 1;
+            foreach (OrderField filledOrder in filedOrderEnumerable)
             {
-                List_submit_order_success = List_submit_order_success + submit_order_success_list[m].OrderID + "---" + submit_order_success_list[m].LimitPrice + "\n";
+                List_submit_order_success = List_submit_order_success + ordinal + " " + filledOrder.OrderID + "---" + filledOrder.LimitPrice + "\n";
+                ordinal++;
             }
 
             String Title3 = "Part III 交易成交\n";
             String List_trade_success = null;
-            for (int m = 0; m < trade_success_list.Count; m++)
+            ordinal = 1;
+            foreach (TradeField tradeField in trade_success_list)
             {
-                List_trade_success = List_trade_success + trade_success_list[m].OrderID + "---" + trade_success_list[m].Price + "\n";
+                List_trade_success = List_trade_success + ordinal + " " + tradeField.OrderID + "---" + tradeField.Price + "\n";
+                ordinal++;
             }
 
             richTextBox1.Text = Title1 + List_submit_order + Title2 + List_submit_order_success + Title3 + List_trade_success;
@@ -330,10 +338,11 @@ namespace HaiFeng
             platformInfo.Investor = textBox3.Text.ToString();
             platformInfo.Investorpass = textBox4.Text.ToString();
             platformInfo.Broker = textBox9.Text.ToString();
-           
-            Boolean task = fileAction.Write(root_dir,platformInfo);
 
-            if (task) {
+            Boolean task = fileAction.Write(root_dir, platformInfo);
+
+            if (task)
+            {
                 LogSave.log("数据保存成功！");
                 Console.WriteLine("数据保存成功！");
             }
@@ -347,7 +356,7 @@ namespace HaiFeng
             int buy_nums_ar = int.Parse(buy_nums);//买单挂单数
 
             IList<OrderField> openOrderList = this.fileAction.ReadOpenOrders(root_dir);
-            if (openOrderList.Count > 0)
+            if (openOrderList != null && openOrderList.Count > 0)
             {
                 IEnumerator<OrderField> openOrderEnumerator = openOrderList.GetEnumerator();
                 string logMessage;
