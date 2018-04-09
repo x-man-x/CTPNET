@@ -146,7 +146,7 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(230, 32);
             this.textBox3.TabIndex = 7;
-            this.textBox3.Text = "099364";
+            this.textBox3.Text = "104247";
             // 
             // textBox4
             // 
@@ -155,7 +155,7 @@
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(230, 32);
             this.textBox4.TabIndex = 8;
-            this.textBox4.Text = "868686";
+            this.textBox4.Text = "888888";
             // 
             // label5
             // 
@@ -209,7 +209,6 @@
             // 
             // timer1
             // 
-            this.timer1.Interval = 20;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // logoutButton

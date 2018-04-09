@@ -139,5 +139,29 @@ namespace HaiFeng
 		{
 			return $"{_OrderID}, {_InstrumentID},{_Direction},{_Offset},{_LimitPrice},{_Volume},{_InsertTime},{_AvgPrice},{_VolumeLeft},{_TradeTime},{_Status},{_StatusMsg},{_IsLocal},{_Custom},{_SysID}";
 		}
+
+        public string ToShortString()
+        {
+            string returnValue = "定单号:" + _OrderID;
+            if (_Direction == DirectionType.Buy)
+                returnValue += ",买";
+            else
+                returnValue += ",卖";
+            if (_Offset == OffsetType.Close)
+            {
+                returnValue += "平";
+            }
+            else if (_Offset == OffsetType.CloseToday)
+            {
+                returnValue += "平今";
+            }
+            else
+            {
+                returnValue += "开";
+            }
+            returnValue += ",价格：" + _LimitPrice;
+            return returnValue;
+
+        }
 	}
 }

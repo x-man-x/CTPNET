@@ -155,10 +155,13 @@ namespace HaiFeng
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            string logMessage = "timer1:" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss.fff");
+            LogSave.log(logMessage);
+            Console.WriteLine(logMessage);
             //Thread.Sleep(1000);
             // todo: revert when trading.
-            //price = int.Parse(ctpQuote.NowPrice);
-            price = 1;
+            price = int.Parse(ctpQuote.NowPrice);
+            //price = 1;
             this.textBox6.Text = price.ToString();
             this.Refresh();
 
@@ -226,27 +229,27 @@ namespace HaiFeng
             this.fileAction.WriteOpenOrders(root_dir, submit_order_list);
             trade_success_list = ctpTrade._lt_trade_success;
 
-            String Title1 = "Part I 挂单提交成功\n";
-            String List_submit_order = null;
+            String Title1 = "Part I 提交定单\n";
+            String List_submit_order = "";
             for (int m = 0; m < submit_order_list.Count; m++)
             {
-                List_submit_order = List_submit_order + submit_order_list[m].OrderID + "---" + submit_order_list[m].LimitPrice + "\n";
+                List_submit_order = List_submit_order + (m+1).ToString("D3")+" " +submit_order_list[m].ToShortString()+ "\n";
             }//for
 
-            String Title2 = "Part II 挂单成功\n";
-            IEnumerable<OrderField> filedOrderEnumerable = this.ctpTrade.idToOrderMap.Values
+            String Title2 = "Part II 成交定单\n";
+            IEnumerable<OrderField> filledOrderEnumerable = this.ctpTrade.idToOrderMap.Values
                 .Where(orderField => orderField.Status == OrderStatus.Filled)
                 .OrderBy(orderField => orderField.InsertTime)
                 ;
             String List_submit_order_success = "";
             int ordinal = 1;
-            foreach (OrderField filledOrder in filedOrderEnumerable)
+            foreach (OrderField filledOrder in filledOrderEnumerable)
             {
-                List_submit_order_success = List_submit_order_success + ordinal + " " + filledOrder.OrderID + "---" + filledOrder.LimitPrice + "\n";
+                List_submit_order_success = List_submit_order_success + ordinal.ToString("D3") + " " + filledOrder.ToShortString() + "\n";
                 ordinal++;
             }
 
-            String Title3 = "Part III 交易成交\n";
+            String Title3 = "Part III 交易信息\n";
             String List_trade_success = null;
             ordinal = 1;
             foreach (TradeField tradeField in trade_success_list)
