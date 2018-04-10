@@ -63,6 +63,7 @@
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.testSaveOpenOrdersButton = new System.Windows.Forms.Button();
+            this.cleanOvernightOrderButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -96,9 +97,9 @@
             this.textBox1.Font = new System.Drawing.Font("宋体", 16F);
             this.textBox1.Location = new System.Drawing.Point(222, 265);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(230, 32);
+            this.textBox1.Size = new System.Drawing.Size(314, 32);
             this.textBox1.TabIndex = 2;
-            this.textBox1.Text = "tcp://180.168.146.187:10010";
+            this.textBox1.Text = "tcp://218.202.237.33:10012";
             // 
             // label2
             // 
@@ -115,9 +116,9 @@
             this.textBox2.Font = new System.Drawing.Font("宋体", 16F);
             this.textBox2.Location = new System.Drawing.Point(222, 327);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(230, 32);
+            this.textBox2.Size = new System.Drawing.Size(314, 32);
             this.textBox2.TabIndex = 4;
-            this.textBox2.Text = "tcp://180.168.146.187:10000";
+            this.textBox2.Text = "tcp://218.202.237.33:10002";
             // 
             // label3
             // 
@@ -209,6 +210,7 @@
             // 
             // timer1
             // 
+            this.timer1.Interval = 200;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // logoutButton
@@ -305,7 +307,7 @@
             // initOrderButton
             // 
             this.initOrderButton.Font = new System.Drawing.Font("宋体", 16F);
-            this.initOrderButton.Location = new System.Drawing.Point(222, 654);
+            this.initOrderButton.Location = new System.Drawing.Point(317, 654);
             this.initOrderButton.Name = "initOrderButton";
             this.initOrderButton.Size = new System.Drawing.Size(135, 34);
             this.initOrderButton.TabIndex = 24;
@@ -396,11 +398,23 @@
             this.testSaveOpenOrdersButton.UseVisualStyleBackColor = true;
             this.testSaveOpenOrdersButton.Click += new System.EventHandler(this.testSaveOpenOrdersButton_Click);
             // 
+            // cleanOvernightOrderButton
+            // 
+            this.cleanOvernightOrderButton.Font = new System.Drawing.Font("宋体", 16F);
+            this.cleanOvernightOrderButton.Location = new System.Drawing.Point(56, 654);
+            this.cleanOvernightOrderButton.Name = "cleanOvernightOrderButton";
+            this.cleanOvernightOrderButton.Size = new System.Drawing.Size(189, 34);
+            this.cleanOvernightOrderButton.TabIndex = 33;
+            this.cleanOvernightOrderButton.Text = "清除隔夜定单";
+            this.cleanOvernightOrderButton.UseVisualStyleBackColor = true;
+            this.cleanOvernightOrderButton.Click += new System.EventHandler(this.cleanOvernightOrderButton_Click);
+            // 
             // Trade
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1029, 809);
+            this.Controls.Add(this.cleanOvernightOrderButton);
             this.Controls.Add(this.testSaveOpenOrdersButton);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.richTextBox1);
@@ -477,5 +491,6 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Button testSaveOpenOrdersButton;
+        private System.Windows.Forms.Button cleanOvernightOrderButton;
     }
 }

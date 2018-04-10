@@ -132,6 +132,15 @@ namespace HaiFeng
                 ctpTrade.Run();
             }
 
+            IList<OrderField> openOrderList = this.fileAction.ReadOpenOrders(root_dir);
+            String Title1 = "隔夜定单\n";
+            String List_submit_order = "";
+            for (int m = 0; m < openOrderList.Count; m++)
+            {
+                List_submit_order = List_submit_order + (m + 1).ToString("D3") + " " + openOrderList[m].ToShortString() + "\n";
+            }//for
+            this.richTextBox1.Text = Title1 + List_submit_order;
+
         }
 
         private void closeTQ() {
@@ -328,7 +337,6 @@ namespace HaiFeng
         private void initOrderButton_Click(object sender, EventArgs e)
         {
             //保存设置数据
-            fileAction = new FileAction();
             platformInfo = new PlatformInfo();
             platformInfo.Tcp_ip_quote = textBox1.Text.ToString();
             platformInfo.Tcp_ip_trade = textBox2.Text.ToString();
@@ -484,6 +492,14 @@ namespace HaiFeng
 
             IList<OrderField> observedOrderList = this.fileAction.ReadOpenOrders(path);
             Console.Write(observedOrderList);
+
+        }
+
+        private void cleanOvernightOrderButton_Click(object sender, EventArgs e)
+        {
+            IList<OrderField> openOrderList = new List<OrderField>();
+            this.fileAction.WriteOpenOrders(root_dir, openOrderList);
+            this.richTextBox1.Text = "隔夜定单\n已清空";
 
         }
     } // class
