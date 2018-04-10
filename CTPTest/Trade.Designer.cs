@@ -390,12 +390,13 @@
             // testSaveOpenOrdersButton
             // 
             this.testSaveOpenOrdersButton.Font = new System.Drawing.Font("宋体", 16F);
-            this.testSaveOpenOrdersButton.Location = new System.Drawing.Point(547, 715);
+            this.testSaveOpenOrdersButton.Location = new System.Drawing.Point(581, 715);
             this.testSaveOpenOrdersButton.Name = "testSaveOpenOrdersButton";
-            this.testSaveOpenOrdersButton.Size = new System.Drawing.Size(142, 34);
+            this.testSaveOpenOrdersButton.Size = new System.Drawing.Size(153, 34);
             this.testSaveOpenOrdersButton.TabIndex = 32;
             this.testSaveOpenOrdersButton.Text = "测试保存定单";
             this.testSaveOpenOrdersButton.UseVisualStyleBackColor = true;
+            this.testSaveOpenOrdersButton.Visible = false;
             this.testSaveOpenOrdersButton.Click += new System.EventHandler(this.testSaveOpenOrdersButton_Click);
             // 
             // cleanOvernightOrderButton

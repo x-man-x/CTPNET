@@ -165,12 +165,20 @@ namespace HaiFeng
         private void timer1_Tick(object sender, EventArgs e)
         {
             string logMessage = "timer1:" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss.fff");
-            LogSave.log(logMessage);
-            Console.WriteLine(logMessage);
+            //LogSave.log(logMessage);
+            //Console.WriteLine(logMessage);
             //Thread.Sleep(1000);
             // todo: revert when trading.
-            price = int.Parse(ctpQuote.NowPrice);
             //price = 1;
+            if(ctpQuote.NowPrice==null)
+            {
+                logMessage = "[" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss.fff")+"]尚未收到最新价格，略过。";
+                LogSave.log(logMessage);
+                Console.WriteLine(logMessage);
+                return;
+            }
+            price = int.Parse(ctpQuote.NowPrice);
+            
             this.textBox6.Text = price.ToString();
             this.Refresh();
 
@@ -180,7 +188,7 @@ namespace HaiFeng
             //lt_trade_success = tt._lt_trade_success;
             //lt_submit_success = tt._lt_submit_success;
 
-            submit_order_success_list = ctpTrade._lt_submit_order_success;
+            submit_order_success_list = ctpTrade.getSubbmittedOrders();
 
             String str = null;
             if (submit_order_success_list != null && submit_order_success_list.Count > 0)
@@ -215,17 +223,9 @@ namespace HaiFeng
                             ctpTrade.sell_btn_Open(submit_order_success_list[m].LimitPrice + 1);
                         }
                     }
+                    ctpTrade.removeSubmittedOrder(tempOrderId);
+                    ctpTrade.removeFilledOrder(tempOrderId);
 
-                    ctpTrade._lt_submit_order_success.RemoveAt(m);
-
-                    for (int n = 0; n < ctpTrade._lt_submit_order.Count; n++)
-                    {
-                        if (ctpTrade._lt_submit_order[n].OrderID == tempOrderId)
-                        {
-                            ctpTrade._lt_submit_order.RemoveAt(n);
-                            break;
-                        }
-                    }
                 }//for
                 if (str != null)
                 {
@@ -233,10 +233,10 @@ namespace HaiFeng
                     Console.WriteLine(str + "\n");
                 }
             }//if
-            submit_order_list = ctpTrade._lt_submit_order;
+            submit_order_list = ctpTrade.getSubbmittedOrders();
 
             this.fileAction.WriteOpenOrders(root_dir, submit_order_list);
-            trade_success_list = ctpTrade._lt_trade_success;
+            trade_success_list = ctpTrade.getExecutioins();
 
             String Title1 = "Part I 提交定单\n";
             String List_submit_order = "";
@@ -246,7 +246,7 @@ namespace HaiFeng
             }//for
 
             String Title2 = "Part II 成交定单\n";
-            IEnumerable<OrderField> filledOrderEnumerable = this.ctpTrade.idToOrderMap.Values
+            IEnumerable<OrderField> filledOrderEnumerable = this.ctpTrade.getAllOrders()
                 .Where(orderField => orderField.Status == OrderStatus.Filled)
                 .OrderBy(orderField => orderField.InsertTime)
                 ;
