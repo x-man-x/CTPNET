@@ -188,51 +188,6 @@ namespace HaiFeng
             //lt_trade_success = tt._lt_trade_success;
             //lt_submit_success = tt._lt_submit_success;
 
-            submit_order_success_list = ctpTrade.getFilledOrders();
-
-            String str = null;
-            if (submit_order_success_list != null && submit_order_success_list.Count > 0)
-            {
-                OrderField tempOrderField;
-                string tempOrderId;
-                for (int m = submit_order_success_list.Count - 1; m >= 0; m--)
-                {
-                    tempOrderField = submit_order_success_list[m];
-                    tempOrderId = tempOrderField.OrderID;
-                    str = str + submit_order_success_list[m].InstrumentID + "..." + submit_order_success_list[m].Direction + "..." + submit_order_success_list[m].Offset + "..." + submit_order_success_list[m].LimitPrice + "\n";
-
-                    if (submit_order_success_list[m].Direction == DirectionType.Sell)
-                    {
-                        if (submit_order_success_list[m].Offset == OffsetType.Open)
-                        {
-                            ctpTrade.buy_btn_Close(submit_order_success_list[m].LimitPrice - 1);
-                        }
-                        else if (submit_order_success_list[m].Offset == OffsetType.Close)
-                        {
-                            ctpTrade.buy_btn_Open(submit_order_success_list[m].LimitPrice - 1);
-                        }
-                    }
-                    else if (submit_order_success_list[m].Direction == DirectionType.Buy)
-                    {
-                        if (submit_order_success_list[m].Offset == OffsetType.Open)
-                        {
-                            ctpTrade.sell_btn_Close(submit_order_success_list[m].LimitPrice + 1);
-                        }
-                        else if (submit_order_success_list[m].Offset == OffsetType.Close)
-                        {
-                            ctpTrade.sell_btn_Open(submit_order_success_list[m].LimitPrice + 1);
-                        }
-                    }
-                    // ctpTrade.removeSubmittedOrder(tempOrderId);
-                    ctpTrade.removeFilledOrder(tempOrderId);
-
-                }//for
-                if (str != null)
-                {
-                    LogSave.log("quote_url： " + quote_url + "\n trade_url" + trade_url + "\n username" + username + "\n password" + password + "\n investorpass" + broker + "\n price_first" + price_first + "\n sub1" + sub1);
-                    Console.WriteLine(str + "\n");
-                }
-            }//if
             IList<OrderField> openOrderEnumerable = this.ctpTrade.getOpenOrders();
 
             this.fileAction.WriteOpenOrders(root_dir, openOrderEnumerable);

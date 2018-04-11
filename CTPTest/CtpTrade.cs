@@ -283,17 +283,46 @@ namespace HaiFeng
             Log($"OnRtnOrder 挂单：{e.Value.InstrumentID}\t{e.Value.Direction}\t{e.Value.Offset}\t{e.Value.LimitPrice}\t{e.Value.Volume}\t{e.Value.OrderID}\t{e.Value.SysID}\t{e.Value.StatusMsg}");
             OrderField orderField = e.Value;
             this.updateAllOrders(orderField);
-            if (e.Value.StatusMsg == "全部成交")
+            if (e.Value.Status == OrderStatus.Filled)
             {
-                this.addFilledOrder(orderField);
+                this.placeReverseOrder(orderField);
             }
-            else
-            {
-                this.AddSubmittedOrder(orderField);
-            }
+           
             
             //if (e.Value.IsLocal)
             //    _t.ReqOrderAction(e.Value.OrderID);
+        }
+
+        private void placeReverseOrder(OrderField filledOrder)
+        {
+            string tempOrderId = filledOrder.OrderID;
+            String str ="定单成交，下反转单："+ filledOrder.InstrumentID + "..." + filledOrder.Direction + "..." + filledOrder.Offset + "..." + filledOrder.LimitPrice + "\n";
+
+            if (filledOrder.Direction == DirectionType.Sell)
+            {
+                if (filledOrder.Offset == OffsetType.Open)
+                {
+                    this.buy_btn_Close(filledOrder.LimitPrice - 1);
+                }
+                else if (filledOrder.Offset == OffsetType.Close)
+                {
+                    this.buy_btn_Open(filledOrder.LimitPrice - 1);
+                }
+            }
+            else if (filledOrder.Direction == DirectionType.Buy)
+            {
+                if (filledOrder.Offset == OffsetType.Open)
+                {
+                    this.sell_btn_Close(filledOrder.LimitPrice + 1);
+                }
+                else if (filledOrder.Offset == OffsetType.Close)
+                {
+                    this.sell_btn_Open(filledOrder.LimitPrice + 1);
+                }
+            }
+            Log(str);
+            Console.WriteLine(str + "\n");
+
         }
 
         private void _t_OnFrontConnected(object sender, EventArgs e)
