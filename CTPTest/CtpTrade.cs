@@ -31,7 +31,42 @@ namespace HaiFeng
         private ReaderWriterLock executionOrderReadWriteLock = new ReaderWriterLock();
         private ReaderWriterLock orderMapReadWriteLock = new ReaderWriterLock();
 
-        
+        public IList<OrderField> getOpenOrders()
+        {
+            this.orderMapReadWriteLock.AcquireReaderLock(1000);
+            IList<OrderField> returnValue;
+            try
+            {
+                returnValue = this.idToOrderMap.Values
+                    .Where(orderField => orderField.Status == OrderStatus.Normal)
+               .OrderBy(orderField => orderField.InsertTime)
+               .ToList();
+            }
+            finally
+            {
+                this.orderMapReadWriteLock.ReleaseReaderLock();
+            }
+            return returnValue;
+        }
+
+
+        public IList<OrderField> getFilledOrders2()
+        {
+            this.orderMapReadWriteLock.AcquireReaderLock(1000);
+            IList<OrderField> returnValue;
+            try
+            {
+                returnValue = this.idToOrderMap.Values
+                    .Where(orderField => orderField.Status == OrderStatus.Filled)
+               .OrderBy(orderField => orderField.InsertTime)
+               .ToList();
+            }
+            finally
+            {
+                this.orderMapReadWriteLock.ReleaseReaderLock();
+            }
+            return returnValue;
+        }
         public IList<OrderField> getAllOrders()
         {
             this.orderMapReadWriteLock.AcquireReaderLock(1000);

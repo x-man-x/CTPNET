@@ -188,7 +188,7 @@ namespace HaiFeng
             //lt_trade_success = tt._lt_trade_success;
             //lt_submit_success = tt._lt_submit_success;
 
-            submit_order_success_list = ctpTrade.getSubbmittedOrders();
+            submit_order_success_list = ctpTrade.getFilledOrders();
 
             String str = null;
             if (submit_order_success_list != null && submit_order_success_list.Count > 0)
@@ -223,7 +223,7 @@ namespace HaiFeng
                             ctpTrade.sell_btn_Open(submit_order_success_list[m].LimitPrice + 1);
                         }
                     }
-                    ctpTrade.removeSubmittedOrder(tempOrderId);
+                    // ctpTrade.removeSubmittedOrder(tempOrderId);
                     ctpTrade.removeFilledOrder(tempOrderId);
 
                 }//for
@@ -233,32 +233,32 @@ namespace HaiFeng
                     Console.WriteLine(str + "\n");
                 }
             }//if
-            submit_order_list = ctpTrade.getSubbmittedOrders();
+            IList<OrderField> openOrderEnumerable = this.ctpTrade.getOpenOrders();
 
-            this.fileAction.WriteOpenOrders(root_dir, submit_order_list);
-            trade_success_list = ctpTrade.getExecutioins();
+            this.fileAction.WriteOpenOrders(root_dir, openOrderEnumerable);
+           
 
             String Title1 = "Part I 提交定单\n";
             String List_submit_order = "";
-            for (int m = 0; m < submit_order_list.Count; m++)
+            int ordinal = 1;
+            foreach (OrderField openOrder in openOrderEnumerable)
             {
-                List_submit_order = List_submit_order + (m+1).ToString("D3")+" " +submit_order_list[m].ToShortString()+ "\n";
+                List_submit_order = List_submit_order + ordinal.ToString("D3")+" " +openOrder.ToShortString()+ "\n";
+                ordinal++;
             }//for
 
             String Title2 = "Part II 成交定单\n";
-            IEnumerable<OrderField> filledOrderEnumerable = this.ctpTrade.getAllOrders()
-                .Where(orderField => orderField.Status == OrderStatus.Filled)
-                .OrderBy(orderField => orderField.InsertTime)
-                ;
+            IEnumerable<OrderField> filledOrderEnumerable = this.ctpTrade.getFilledOrders2();
             String List_submit_order_success = "";
-            int ordinal = 1;
+             ordinal = 1;
             foreach (OrderField filledOrder in filledOrderEnumerable)
             {
                 List_submit_order_success = List_submit_order_success + ordinal.ToString("D3") + " " + filledOrder.ToShortString() + "\n";
                 ordinal++;
             }
 
-            String Title3 = "Part III 交易信息\n";
+            String Title3 = "Part III 成交记录\n";
+            trade_success_list = ctpTrade.getExecutioins();
             String List_trade_success = null;
             ordinal = 1;
             foreach (TradeField tradeField in trade_success_list)
