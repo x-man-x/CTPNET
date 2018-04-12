@@ -28,7 +28,7 @@ namespace HaiFeng
         private String broker = null;
         private String sub1 = null;
         public String root_dir = null;
-        private FileAction fileAction = new FileAction(); 
+        private FileAction fileAction = new FileAction();
         public PlatformInfo platformInfo = null;
 
         public Log LogSave = new Log(AppDomain.CurrentDomain.BaseDirectory);
@@ -37,29 +37,32 @@ namespace HaiFeng
         private CtpQuote ctpQuote = null;//初始化行情进程
         private CtpTrade ctpTrade = null;//初始化交易进程
 
-        public  IList<OrderField> submit_order_list = null;
-        public  IList<OrderField> submit_order_success_list = null;
-        public  IList<TradeField> trade_success_list = null;
-        
+        public IList<OrderField> submit_order_list = null;
+        public IList<OrderField> submit_order_success_list = null;
+        public IList<TradeField> trade_success_list = null;
+
 
         public Trade()
         {
             // C:\Users\wkjy\Desktop\CTPNET\CTPTest\Debug\
             root_dir = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
-           
-             String mac = "3C-F8-62-E9-A5-3A";//Bx
-            //String mac = "9C-5C-8E-2E-60-7C";//Yu 9C-5C-8E-2E-60-7C
-            //String mac = "9C-5C-8E-2E-60-7C";//Yu Office
+            HashSet<String> macWhiteList = new HashSet<string>();
+            macWhiteList.Add("3C-F8-62-E9-A5-3A");//Bx
+            macWhiteList.Add("9C-5C-8E-2E-60-7C");//Yu Office 
+
             Boolean flag = false;
             MacByIPConfig mbc = new MacByIPConfig();
 
             List<String> lt = mbc.GetMacByIPConfig();
             string[] stringSeparators = new string[] { ": " };
-            for (int i = 0; i < lt.Count; i++) {
+            for (int i = 0; i < lt.Count; i++)
+            {
                 String mac_temp = lt[i].ToString().Split(stringSeparators, StringSplitOptions.None)[1];
                 //Console.WriteLine(mac_temp);
-                if (mac_temp == mac) {
+                if (macWhiteList.Contains(mac_temp))
+                {
                     flag = true;
+                    break;
                 }
             }
 
@@ -67,7 +70,7 @@ namespace HaiFeng
             if (flag)
             {
                 InitializeComponent();
-                
+
                 platformInfo = fileAction.Read(root_dir);
 
                 textBox1.Text = platformInfo.Tcp_ip_quote;
@@ -82,17 +85,15 @@ namespace HaiFeng
                 this.Refresh();
 
             }
-            else {
+            else
+            {
                 LogSave.log("小子你没注册呢？请不要轻易使用，谢谢！");
                 Console.WriteLine("小子你没注册呢？请不要轻易使用，谢谢！");
             }
 
-            
-
-
         }
 
-       
+
 
 
 
@@ -104,7 +105,7 @@ namespace HaiFeng
 
             price_first = textBox7.Text;
             sell_nums = textBox10.Text;
-            buy_nums = textBox8.Text; 
+            buy_nums = textBox8.Text;
 
             quote_url = textBox1.Text;
             trade_url = textBox2.Text;
@@ -118,15 +119,15 @@ namespace HaiFeng
             LogSave.log("程序启动............. ");
             Console.WriteLine("程序启动............. ");
             LogSave.log("quote_url： " + quote_url + "\n trade_url" + trade_url + "\n username" + username + "\n password" + password + "\n investorpass" + broker + "\n price_first" + price_first + "\n sub1" + sub1);
-            Console.WriteLine("quote_url： "+ quote_url+ "\n trade_url" + trade_url+ "\n username"+ username + "\n password"+ password+ "\n investorpass"+ broker + "\n price_first" + price_first + "\n sub1"+ sub1);
+            Console.WriteLine("quote_url： " + quote_url + "\n trade_url" + trade_url + "\n username" + username + "\n password" + password + "\n investorpass" + broker + "\n price_first" + price_first + "\n sub1" + sub1);
 
-           
+
             ctpQuote = new CtpQuote(quote_url, trade_url, username, password, broker, price_first, sub1);
             ctpTrade = new CtpTrade(quote_url, trade_url, username, password, broker, price_first, sub1);
 
 
-            int i = 1; 
-            if (i ==1)
+            int i = 1;
+            if (i == 1)
             {
                 ctpQuote.Run();
                 ctpTrade.Run();
@@ -135,19 +136,31 @@ namespace HaiFeng
             IList<OrderField> openOrderList = this.fileAction.ReadOpenOrders(root_dir);
             String Title1 = "隔夜定单\n";
             String List_submit_order = "";
-            for (int m = 0; m < openOrderList.Count; m++)
+
+            if (openOrderList != null && openOrderList.Count > 0)
             {
-                List_submit_order = List_submit_order + (m + 1).ToString("D3") + " " + openOrderList[m].ToShortString() + "\n";
-            }//for
+                int ordinal = 1;
+                foreach (OrderField openOrder in openOrderList)
+                {
+                    List_submit_order += ordinal.ToString("D3") + " " + openOrder.ToShortString() + "\n";
+                    ordinal++;
+                }//foreach
+            }
+            else
+            {
+                List_submit_order += "无";
+            }
             this.richTextBox1.Text = Title1 + List_submit_order;
+
 
         }
 
-        private void closeTQ() {
+        private void closeTQ()
+        {
             ctpQuote.Release();
             ctpTrade.Release();
         }
-        
+
 
         private void Trade_Load(object sender, EventArgs e)
         {
@@ -156,7 +169,7 @@ namespace HaiFeng
 
         private void textBox6_TextChanged(object sender, EventArgs e)
         {
-          
+
 
         }
 
@@ -170,15 +183,15 @@ namespace HaiFeng
             //Thread.Sleep(1000);
             // todo: revert when trading.
             //price = 1;
-            if(ctpQuote.NowPrice==null)
+            if (ctpQuote.NowPrice == null)
             {
-                logMessage = "[" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss.fff")+"]尚未收到最新价格，略过。";
+                logMessage = "[" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss.fff") + "]尚未收到最新价格，略过。";
                 LogSave.log(logMessage);
                 Console.WriteLine(logMessage);
                 return;
             }
             price = int.Parse(ctpQuote.NowPrice);
-            
+
             this.textBox6.Text = price.ToString();
             this.Refresh();
 
@@ -191,24 +204,24 @@ namespace HaiFeng
             IList<OrderField> openOrderEnumerable = this.ctpTrade.getOpenOrders();
 
             this.fileAction.WriteOpenOrders(root_dir, openOrderEnumerable);
-           
+
 
             String Title1 = "Part I 提交定单\n";
             String List_submit_order = "";
             int ordinal = 1;
             foreach (OrderField openOrder in openOrderEnumerable)
             {
-                List_submit_order = List_submit_order + ordinal.ToString("D3")+" " +openOrder.ToShortString()+ "\n";
+                List_submit_order += ordinal.ToString("D3") + " " + openOrder.ToShortString() + "\n";
                 ordinal++;
             }//for
 
             String Title2 = "Part II 成交定单\n";
             IEnumerable<OrderField> filledOrderEnumerable = this.ctpTrade.getFilledOrders2();
             String List_submit_order_success = "";
-             ordinal = 1;
+            ordinal = 1;
             foreach (OrderField filledOrder in filledOrderEnumerable)
             {
-                List_submit_order_success = List_submit_order_success + ordinal.ToString("D3") + " " + filledOrder.ToShortString() + "\n";
+                List_submit_order_success += ordinal.ToString("D3") + " " + filledOrder.ToShortString() + "\n";
                 ordinal++;
             }
 
@@ -218,7 +231,7 @@ namespace HaiFeng
             ordinal = 1;
             foreach (TradeField tradeField in trade_success_list)
             {
-                List_trade_success = List_trade_success + ordinal + " " + tradeField.OrderID + "---" + tradeField.Price + "\n";
+                List_trade_success += ordinal + " " + tradeField.OrderID + "---" + tradeField.Price + "\n";
                 ordinal++;
             }
 
@@ -243,7 +256,7 @@ namespace HaiFeng
 
         private void button3_Click_1(object sender, EventArgs e)
         {
-            ctpTrade.buy_btn_Open(double.Parse(price.ToString())+1);
+            ctpTrade.buy_btn_Open(double.Parse(price.ToString()) + 1);
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -255,7 +268,7 @@ namespace HaiFeng
         {
             price_first = textBox7.Text;
             timer2.Start();
-            
+
         }
         int i = 1;
         int j = 1;
@@ -268,14 +281,16 @@ namespace HaiFeng
             int price_first_int = int.Parse(price_first); //设定中间价
 
             //卖单下单
-            if (sell_nums_ar >= i) {
+            if (sell_nums_ar >= i)
+            {
                 LogSave.log("卖单" + i + "..." + (price_first_int + i));
                 Console.WriteLine("卖单" + i + "..." + (price_first_int + i));
                 ctpTrade.sell_btn_Open(price_first_int + i);
             }
 
             //卖单下单
-            if (buy_nums_ar >= i) {
+            if (buy_nums_ar >= i)
+            {
                 LogSave.log("卖单" + i + "..." + (price_first_int + i));
                 Console.WriteLine("买单" + i + "..." + (price_first_int - i));
                 ctpTrade.buy_btn_Open(price_first_int - i);
@@ -283,10 +298,11 @@ namespace HaiFeng
 
             i++;
 
-            if (i > sell_nums_ar && i > buy_nums_ar) {
+            if (i > sell_nums_ar && i > buy_nums_ar)
+            {
                 timer2.Stop();
             }
-            
+
         }
 
         private void initOrderButton_Click(object sender, EventArgs e)
@@ -402,7 +418,7 @@ namespace HaiFeng
         private void button7_Click(object sender, EventArgs e)
         {
             int price_first_int = int.Parse(price_first);
-            ctpTrade.sell_btn_Open(price_first_int+1);
+            ctpTrade.sell_btn_Open(price_first_int + 1);
         }
 
         private void label11_Click(object sender, EventArgs e)
@@ -427,9 +443,10 @@ namespace HaiFeng
 
         private void testSaveOpenOrdersButton_Click(object sender, EventArgs e)
         {
-            OrderField orderField1 = new OrderField() {
-                OrderID="1",
-                Direction= DirectionType.Buy,
+            OrderField orderField1 = new OrderField()
+            {
+                OrderID = "1",
+                Direction = DirectionType.Buy,
                 Offset = OffsetType.Open
             };
             OrderField orderField2 = new OrderField()
@@ -443,7 +460,7 @@ namespace HaiFeng
             orderList.Add(orderField1);
             orderList.Add(orderField2);
 
-            this.fileAction.WriteOpenOrders(path,orderList);
+            this.fileAction.WriteOpenOrders(path, orderList);
 
             IList<OrderField> observedOrderList = this.fileAction.ReadOpenOrders(path);
             Console.Write(observedOrderList);

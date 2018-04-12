@@ -70,7 +70,7 @@
             // loginButton
             // 
             this.loginButton.Font = new System.Drawing.Font("宋体", 16F);
-            this.loginButton.Location = new System.Drawing.Point(294, 207);
+            this.loginButton.Location = new System.Drawing.Point(122, 383);
             this.loginButton.Name = "loginButton";
             this.loginButton.Size = new System.Drawing.Size(75, 34);
             this.loginButton.TabIndex = 0;
@@ -86,7 +86,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 16F);
-            this.label1.Location = new System.Drawing.Point(78, 265);
+            this.label1.Location = new System.Drawing.Point(78, 212);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(142, 22);
             this.label1.TabIndex = 1;
@@ -95,7 +95,7 @@
             // textBox1
             // 
             this.textBox1.Font = new System.Drawing.Font("宋体", 16F);
-            this.textBox1.Location = new System.Drawing.Point(222, 265);
+            this.textBox1.Location = new System.Drawing.Point(222, 212);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(314, 32);
             this.textBox1.TabIndex = 2;
@@ -105,7 +105,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("宋体", 16F);
-            this.label2.Location = new System.Drawing.Point(78, 330);
+            this.label2.Location = new System.Drawing.Point(78, 277);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(142, 22);
             this.label2.TabIndex = 3;
@@ -114,7 +114,7 @@
             // textBox2
             // 
             this.textBox2.Font = new System.Drawing.Font("宋体", 16F);
-            this.textBox2.Location = new System.Drawing.Point(222, 327);
+            this.textBox2.Location = new System.Drawing.Point(222, 274);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(314, 32);
             this.textBox2.TabIndex = 4;
@@ -162,7 +162,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("宋体", 16F);
-            this.label5.Location = new System.Drawing.Point(100, 387);
+            this.label5.Location = new System.Drawing.Point(100, 334);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(120, 22);
             this.label5.TabIndex = 9;
@@ -171,7 +171,7 @@
             // textBox5
             // 
             this.textBox5.Font = new System.Drawing.Font("宋体", 16F);
-            this.textBox5.Location = new System.Drawing.Point(222, 384);
+            this.textBox5.Location = new System.Drawing.Point(222, 331);
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(100, 32);
             this.textBox5.TabIndex = 10;
@@ -203,7 +203,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("宋体", 16F);
-            this.label7.Location = new System.Drawing.Point(520, 387);
+            this.label7.Location = new System.Drawing.Point(520, 334);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(0, 22);
             this.label7.TabIndex = 14;
@@ -216,7 +216,7 @@
             // logoutButton
             // 
             this.logoutButton.Font = new System.Drawing.Font("宋体", 16F);
-            this.logoutButton.Location = new System.Drawing.Point(942, 26);
+            this.logoutButton.Location = new System.Drawing.Point(317, 383);
             this.logoutButton.Name = "logoutButton";
             this.logoutButton.Size = new System.Drawing.Size(75, 34);
             this.logoutButton.TabIndex = 15;
@@ -234,6 +234,7 @@
             this.button3.TabIndex = 17;
             this.button3.Text = "买";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Visible = false;
             this.button3.Click += new System.EventHandler(this.button3_Click_1);
             // 
             // button4
@@ -245,6 +246,7 @@
             this.button4.TabIndex = 18;
             this.button4.Text = "卖";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Visible = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
