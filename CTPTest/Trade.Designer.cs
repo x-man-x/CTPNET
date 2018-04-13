@@ -64,6 +64,8 @@
             this.label12 = new System.Windows.Forms.Label();
             this.testSaveOpenOrdersButton = new System.Windows.Forms.Button();
             this.cleanOvernightOrderButton = new System.Windows.Forms.Button();
+            this.suspendRefreshOrdersButton = new System.Windows.Forms.Button();
+            this.recoverRefreshOrdersButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -370,9 +372,9 @@
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(646, 103);
+            this.richTextBox1.Location = new System.Drawing.Point(540, 76);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(371, 523);
+            this.richTextBox1.Size = new System.Drawing.Size(438, 523);
             this.richTextBox1.TabIndex = 30;
             this.richTextBox1.Text = "";
             // 
@@ -380,7 +382,7 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("宋体", 16F);
-            this.label12.Location = new System.Drawing.Point(642, 45);
+            this.label12.Location = new System.Drawing.Point(536, 43);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(120, 22);
             this.label12.TabIndex = 31;
@@ -410,11 +412,36 @@
             this.cleanOvernightOrderButton.UseVisualStyleBackColor = true;
             this.cleanOvernightOrderButton.Click += new System.EventHandler(this.cleanOvernightOrderButton_Click);
             // 
+            // suspendRefreshOrdersButton
+            // 
+            this.suspendRefreshOrdersButton.Font = new System.Drawing.Font("宋体", 16F);
+            this.suspendRefreshOrdersButton.Location = new System.Drawing.Point(646, 36);
+            this.suspendRefreshOrdersButton.Name = "suspendRefreshOrdersButton";
+            this.suspendRefreshOrdersButton.Size = new System.Drawing.Size(163, 34);
+            this.suspendRefreshOrdersButton.TabIndex = 34;
+            this.suspendRefreshOrdersButton.Text = "暂停刷新挂单";
+            this.suspendRefreshOrdersButton.UseVisualStyleBackColor = true;
+            this.suspendRefreshOrdersButton.Click += new System.EventHandler(this.suspendRefreshOrdersButton_Click);
+            // 
+            // recoverRefreshOrdersButton
+            // 
+            this.recoverRefreshOrdersButton.Font = new System.Drawing.Font("宋体", 16F);
+            this.recoverRefreshOrdersButton.Location = new System.Drawing.Point(815, 36);
+            this.recoverRefreshOrdersButton.Name = "recoverRefreshOrdersButton";
+            this.recoverRefreshOrdersButton.Size = new System.Drawing.Size(163, 34);
+            this.recoverRefreshOrdersButton.TabIndex = 35;
+            this.recoverRefreshOrdersButton.Text = "恢复刷新挂单";
+            this.recoverRefreshOrdersButton.UseVisualStyleBackColor = true;
+            this.recoverRefreshOrdersButton.Visible = false;
+            this.recoverRefreshOrdersButton.Click += new System.EventHandler(this.recoverRefreshOrdersButton_Click);
+            // 
             // Trade
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1029, 809);
+            this.Controls.Add(this.recoverRefreshOrdersButton);
+            this.Controls.Add(this.suspendRefreshOrdersButton);
             this.Controls.Add(this.cleanOvernightOrderButton);
             this.Controls.Add(this.testSaveOpenOrdersButton);
             this.Controls.Add(this.label12);
@@ -493,5 +520,7 @@
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Button testSaveOpenOrdersButton;
         private System.Windows.Forms.Button cleanOvernightOrderButton;
+        private System.Windows.Forms.Button recoverRefreshOrdersButton;
+        private System.Windows.Forms.Button suspendRefreshOrdersButton;
     }
 }

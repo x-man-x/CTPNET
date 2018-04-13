@@ -474,6 +474,20 @@ namespace HaiFeng
             this.richTextBox1.Text = "隔夜定单\n已清空";
 
         }
+
+        private void suspendRefreshOrdersButton_Click(object sender, EventArgs e)
+        {
+            this.timer1.Stop();
+            this.recoverRefreshOrdersButton.Visible = true;
+            this.suspendRefreshOrdersButton.Visible = false;
+        }
+
+        private void recoverRefreshOrdersButton_Click(object sender, EventArgs e)
+        {
+            this.timer1.Start();
+            this.recoverRefreshOrdersButton.Visible = false;
+            this.suspendRefreshOrdersButton.Visible = true;
+        }
     } // class
 }//namespace
 
