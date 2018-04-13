@@ -31,7 +31,7 @@ namespace HaiFeng
         private FileAction fileAction = new FileAction();
         public PlatformInfo platformInfo = null;
 
-        public Log LogSave = new Log(AppDomain.CurrentDomain.BaseDirectory);
+        public Log fileLog = new Log(AppDomain.CurrentDomain.BaseDirectory);
         //public string c = "8899", _investor = "99901110", _investorpass = "686868", _sub1 = "SR801", _sub2 = "m1709";
         //private System.Windows.Forms.Timer Form_Timer;
         private CtpQuote ctpQuote = null;//初始化行情进程
@@ -87,7 +87,7 @@ namespace HaiFeng
             }
             else
             {
-                LogSave.log("小子你没注册呢？请不要轻易使用，谢谢！");
+                fileLog.log("小子你没注册呢？请不要轻易使用，谢谢！");
                 Console.WriteLine("小子你没注册呢？请不要轻易使用，谢谢！");
             }
 
@@ -116,9 +116,9 @@ namespace HaiFeng
             broker = textBox9.Text;
             sub1 = textBox5.Text;
 
-            LogSave.log("程序启动............. ");
+            fileLog.log("程序启动............. ");
             Console.WriteLine("程序启动............. ");
-            LogSave.log("quote_url： " + quote_url + "\n trade_url" + trade_url + "\n username" + username + "\n password" + password + "\n investorpass" + broker + "\n price_first" + price_first + "\n sub1" + sub1);
+            fileLog.log("quote_url： " + quote_url + "\n trade_url" + trade_url + "\n username" + username + "\n password" + password + "\n investorpass" + broker + "\n price_first" + price_first + "\n sub1" + sub1);
             Console.WriteLine("quote_url： " + quote_url + "\n trade_url" + trade_url + "\n username" + username + "\n password" + password + "\n investorpass" + broker + "\n price_first" + price_first + "\n sub1" + sub1);
 
 
@@ -186,7 +186,7 @@ namespace HaiFeng
             if (ctpQuote.NowPrice == null)
             {
                 logMessage = "[" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss.fff") + "]尚未收到最新价格，略过。";
-                LogSave.log(logMessage);
+                fileLog.log(logMessage);
                 Console.WriteLine(logMessage);
                 return;
             }
@@ -283,7 +283,7 @@ namespace HaiFeng
             //卖单下单
             if (sell_nums_ar >= i)
             {
-                LogSave.log("卖单" + i + "..." + (price_first_int + i));
+                fileLog.log("卖单" + i + "..." + (price_first_int + i));
                 Console.WriteLine("卖单" + i + "..." + (price_first_int + i));
                 ctpTrade.sell_btn_Open(price_first_int + i);
             }
@@ -291,7 +291,7 @@ namespace HaiFeng
             //卖单下单
             if (buy_nums_ar >= i)
             {
-                LogSave.log("卖单" + i + "..." + (price_first_int + i));
+                fileLog.log("卖单" + i + "..." + (price_first_int + i));
                 Console.WriteLine("买单" + i + "..." + (price_first_int - i));
                 ctpTrade.buy_btn_Open(price_first_int - i);
             }
@@ -325,7 +325,7 @@ namespace HaiFeng
 
             if (task)
             {
-                LogSave.log("数据保存成功！");
+                fileLog.log("数据保存成功！");
                 Console.WriteLine("数据保存成功！");
             }
             price_first = textBox7.Text;
@@ -350,21 +350,21 @@ namespace HaiFeng
                         if (tempOrderField.Offset == OffsetType.Close)
                         {
                             logMessage = "恢复定单：买平@" + tempOrderField.LimitPrice;
-                            LogSave.log(logMessage);
+                            fileLog.log(logMessage);
                             Console.WriteLine(logMessage);
                             ctpTrade.buy_btn_Close(tempOrderField.LimitPrice);
                         }
                         else if (tempOrderField.Offset == OffsetType.Open)
                         {
                             logMessage = "恢复定单：买开@" + tempOrderField.LimitPrice;
-                            LogSave.log(logMessage);
+                            fileLog.log(logMessage);
                             Console.WriteLine(logMessage);
                             ctpTrade.buy_btn_Open(tempOrderField.LimitPrice);
                         }
                         else
                         {
                             logMessage = "未知定单：" + tempOrderField.Offset + ",价格：" + tempOrderField.LimitPrice;
-                            LogSave.log(logMessage);
+                            fileLog.log(logMessage);
                             Console.WriteLine(logMessage);
                         }
                     }
@@ -373,21 +373,21 @@ namespace HaiFeng
                         if (tempOrderField.Offset == OffsetType.Close)
                         {
                             logMessage = "恢复定单：卖平@" + tempOrderField.LimitPrice;
-                            LogSave.log(logMessage);
+                            fileLog.log(logMessage);
                             Console.WriteLine(logMessage);
                             ctpTrade.sell_btn_Close(tempOrderField.LimitPrice);
                         }
                         else if (tempOrderField.Offset == OffsetType.Open)
                         {
                             logMessage = "恢复定单：卖开@" + tempOrderField.LimitPrice;
-                            LogSave.log(logMessage);
+                            fileLog.log(logMessage);
                             Console.WriteLine(logMessage);
                             ctpTrade.sell_btn_Open(tempOrderField.LimitPrice);
                         }
                         else
                         {
                             logMessage = "未知定单：" + tempOrderField.Offset + ",价格：" + tempOrderField.LimitPrice;
-                            LogSave.log(logMessage);
+                            fileLog.log(logMessage);
                             Console.WriteLine(logMessage);
                         }
                     }
@@ -399,14 +399,14 @@ namespace HaiFeng
             {
                 for (int i = 0; i < sell_nums_ar; i++)
                 {
-                    LogSave.log("卖单" + i + "..." + (price_first_int + i));
+                    fileLog.log("卖单" + i + "..." + (price_first_int + i));
                     Console.WriteLine("卖单" + i + "..." + (price_first_int + i));
                     ctpTrade.sell_btn_Open(price_first_int + i + 1);
                 }
 
                 for (int j = 0; j < buy_nums_ar; j++)
                 {
-                    LogSave.log("买单" + j + "..." + (price_first_int - j));
+                    fileLog.log("买单" + j + "..." + (price_first_int - j));
                     Console.WriteLine("买单" + j + "..." + (price_first_int - j));
                     ctpTrade.buy_btn_Open(price_first_int - j - 1);
                     //  Thread.Sleep(20);

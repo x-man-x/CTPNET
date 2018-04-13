@@ -31,6 +31,7 @@ namespace HaiFeng
         private ReaderWriterLock executionOrderReadWriteLock = new ReaderWriterLock();
         private ReaderWriterLock orderMapReadWriteLock = new ReaderWriterLock();
 
+
         public IList<OrderField> getOpenOrders()
         {
             this.orderMapReadWriteLock.AcquireReaderLock(1000);
@@ -296,7 +297,7 @@ namespace HaiFeng
         private void placeReverseOrder(OrderField filledOrder)
         {
             string tempOrderId = filledOrder.OrderID;
-            String str ="定单成交，下反转单："+ filledOrder.InstrumentID + "..." + filledOrder.Direction + "..." + filledOrder.Offset + "..." + filledOrder.LimitPrice + "\n";
+            String str ="定单成交："+ filledOrder.InstrumentID + "..." + filledOrder.Direction + "..." + filledOrder.Offset + "..." + filledOrder.LimitPrice + "\n";
 
             if (filledOrder.Direction == DirectionType.Sell)
             {
@@ -321,7 +322,7 @@ namespace HaiFeng
                 }
             }
             Log(str);
-            Console.WriteLine(str + "\n");
+            //Console.WriteLine(str + "\n");
 
         }
 
