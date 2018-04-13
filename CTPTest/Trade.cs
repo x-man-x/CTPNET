@@ -413,6 +413,7 @@ namespace HaiFeng
                 }
             }
             timer1.Start();
+            this.initOrderButton.Visible = false;
         }
 
         private void button7_Click(object sender, EventArgs e)
