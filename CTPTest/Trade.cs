@@ -124,7 +124,7 @@ namespace HaiFeng
 
 
             ctpQuote = new CtpQuote(quote_url, trade_url, username, password, broker, price_first, sub1);
-            ctpTrade = new CtpTrade(quote_url, trade_url, username, password, broker, price_first, sub1);
+            ctpTrade = new CtpTrade(root_dir,quote_url, trade_url, username, password, broker, price_first, sub1);
 
 
             int i = 1;
@@ -202,9 +202,6 @@ namespace HaiFeng
             //lt_submit_success = tt._lt_submit_success;
 
             IList<OrderField> openOrderEnumerable = this.ctpTrade.getOpenOrders();
-
-            this.fileAction.WriteOpenOrders(root_dir, openOrderEnumerable);
-
             String Title1 = "Part I 提交定单\n";
             String List_submit_order = "";
             int ordinal = 1;

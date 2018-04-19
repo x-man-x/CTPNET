@@ -12,7 +12,7 @@ namespace HaiFeng
     class CtpTrade
     {
         CTPTrade _t = null;
-
+        private FileAction fileAction = new FileAction();
 
         public string _broker = "9999", _investor = "099364", _investorpass = "868686", _sub1 = "m1801";
         public string _tcp_ip_quote = "tcp://180.168.146.187:10010";
@@ -21,6 +21,7 @@ namespace HaiFeng
         public string _tcp_trade_direction = null;
         public string _tcp_trade_offset = null;
         public string _tcp_trade_price = null;
+        private string root_dir = null;
 
         private List<OrderField> _lt_submit_order = new List<OrderField>();
         private List<OrderField> _lt_submit_order_success = new List<OrderField>();
@@ -31,7 +32,20 @@ namespace HaiFeng
         private ReaderWriterLock executionOrderReadWriteLock = new ReaderWriterLock();
         private ReaderWriterLock orderMapReadWriteLock = new ReaderWriterLock();
 
+        public CtpTrade(string dir,String tcp_ip_quote, String tcp_ip_trade, String investor, String investorpass, String broker, String price_first, String sub1)
+        {
+            this.root_dir = dir;
+            _broker = broker;
+            _investor = investor;
+            _investorpass = investorpass;
+            _sub1 = sub1;
+            _tcp_ip_quote = tcp_ip_quote;
+            _tcp_ip_trade = tcp_ip_trade;
+            //_lt_trade = lt_trade;
+            //_lt_trade_success = lt_trade_success;
+            _t = new CTPTrade();
 
+        }
         public IList<OrderField> getOpenOrders()
         {
             this.orderMapReadWriteLock.AcquireReaderLock(1000);
@@ -49,8 +63,7 @@ namespace HaiFeng
             }
             return returnValue;
         }
-
-
+        
         public IList<OrderField> getFilledOrders2()
         {
             this.orderMapReadWriteLock.AcquireReaderLock(1000);
@@ -230,21 +243,6 @@ namespace HaiFeng
         //public string _tcp_ip_quote = "tcp://180.168.146.187:10010";
         //public string _tcp_ip_trade = "tcp://180.168.146.187:10000";
 
-
-        public CtpTrade(String tcp_ip_quote, String tcp_ip_trade, String investor, String investorpass, String broker, String price_first, String sub1)
-        {
-            _broker = broker;
-            _investor = investor;
-            _investorpass = investorpass;
-            _sub1 = sub1;
-            _tcp_ip_quote = tcp_ip_quote;
-            _tcp_ip_trade = tcp_ip_trade;
-            //_lt_trade = lt_trade;
-            //_lt_trade_success = lt_trade_success;
-            _t = new CTPTrade();
-            
-        }
-
         public void Release()
         {
             _t.ReqUserLogout();
@@ -283,13 +281,17 @@ namespace HaiFeng
         {
             Log($"OnRtnOrder 挂单回报：{e.Value.InstrumentID}\t{e.Value.Direction}\t{e.Value.Offset}\t{e.Value.LimitPrice}\t{e.Value.Volume}\t{e.Value.OrderID}\t{e.Value.SysID}\t{e.Value.StatusMsg}");
             OrderField orderField = e.Value;
-            this.updateAllOrders(orderField);
             if (e.Value.Status == OrderStatus.Filled)
             {
                 this.placeReverseOrder(orderField);
             }
-           
-            
+            this.updateAllOrders(orderField);
+
+            IList<OrderField> openOrderEnumerable = this.getOpenOrders();
+
+            this.fileAction.WriteOpenOrders(root_dir, openOrderEnumerable);
+
+
             //if (e.Value.IsLocal)
             //    _t.ReqOrderAction(e.Value.OrderID);
         }
