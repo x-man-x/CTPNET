@@ -63,7 +63,7 @@ namespace HaiFeng
                 textBox2.Text = platformInfo.Tcp_ip_trade;
                 textBox5.Text = platformInfo.Sub;
                 initialShortOrderCountTextBox.Text = platformInfo.Sell_nums;
-                textBox7.Text = platformInfo.First_price;
+                middlePriceTextBox.Text = platformInfo.First_price;
                 initialLongOrderCountTextBox.Text = platformInfo.Buy_nums;
                 textBox3.Text = platformInfo.Investor;
                 textBox4.Text = platformInfo.Investorpass;
@@ -116,7 +116,7 @@ namespace HaiFeng
             this.loginButton.Visible = false;
             this.logoutButton.Visible = true;
 
-            middlePrice = textBox7.Text;
+            middlePrice = middlePriceTextBox.Text;
             sell_nums = initialShortOrderCountTextBox.Text;
             buy_nums = initialLongOrderCountTextBox.Text;
 
@@ -281,7 +281,7 @@ namespace HaiFeng
             platformInfo.Sub = textBox5.Text.ToString();
 
             platformInfo.Sell_nums = initialShortOrderCountTextBox.Text.ToString();
-            platformInfo.First_price = textBox7.Text.ToString();
+            platformInfo.First_price = middlePriceTextBox.Text.ToString();
             platformInfo.Buy_nums = initialLongOrderCountTextBox.Text.ToString();
 
             platformInfo.Investor = textBox3.Text.ToString();
@@ -295,7 +295,7 @@ namespace HaiFeng
                 this.fileLog.log("数据保存成功！");
                 Console.WriteLine("数据保存成功！");
             }
-            middlePrice = textBox7.Text;
+            middlePrice = middlePriceTextBox.Text;
             int price_first_int = int.Parse(middlePrice); //设定中间价
 
             sell_nums = initialShortOrderCountTextBox.Text;

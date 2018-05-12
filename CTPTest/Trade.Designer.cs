@@ -49,7 +49,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
-            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.middlePriceTextBox = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.initialLongOrderCountTextBox = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -255,14 +255,14 @@
             this.timer2.Interval = 500;
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
-            // textBox7
+            // middlePriceTextBox
             // 
-            this.textBox7.Font = new System.Drawing.Font("宋体", 16F);
-            this.textBox7.Location = new System.Drawing.Point(178, 457);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(135, 32);
-            this.textBox7.TabIndex = 20;
-            this.textBox7.Text = "5597";
+            this.middlePriceTextBox.Font = new System.Drawing.Font("宋体", 16F);
+            this.middlePriceTextBox.Location = new System.Drawing.Point(178, 457);
+            this.middlePriceTextBox.Name = "middlePriceTextBox";
+            this.middlePriceTextBox.Size = new System.Drawing.Size(135, 32);
+            this.middlePriceTextBox.TabIndex = 20;
+            this.middlePriceTextBox.Text = "5597";
             // 
             // label8
             // 
@@ -442,7 +442,7 @@
             this.Controls.Add(this.label9);
             this.Controls.Add(this.initialLongOrderCountTextBox);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.textBox7);
+            this.Controls.Add(this.middlePriceTextBox);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.logoutButton);
@@ -492,7 +492,7 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Timer timer2;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox middlePriceTextBox;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox initialLongOrderCountTextBox;
         private System.Windows.Forms.Button initOrderButton;
