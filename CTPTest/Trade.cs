@@ -17,20 +17,25 @@ namespace HaiFeng
     public partial class Trade : Form
     {
         private DateTime expiryDateTime = new DateTime(2018, 5, 30, 23, 59, 59);
+        private HashSet<String> macWhiteList = new HashSet<string> {
+            "3C-F8-62-E9-A5-3A",//Bx
+            "F8-BC-12-78-AC-7A",//Chen
+            "9C-5C-8E-2E-60-7C"//Yu Office 
+        };
         //合约价格
         private int price = 0;
-        private String price_first = null;//中间价 后面设置  6163
-        private String sell_nums = null;//中间价 后面设置  6163
-        private String buy_nums = null;//中间价 后面设置  6163
+        private String middlePrice = null;//中间价 后面设置  6163
+        private String sell_nums = null;
+        private String buy_nums = null;
         private String quote_url = null;
         private String trade_url = null;
         private String username = null;
         private String password = null;
         private String broker = null;
         private String sub1 = null;
-        public String root_dir = null;
+        // C:\Users\wkjy\Desktop\CTPNET\CTPTest\Debug\
+        private String root_dir = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
         private FileAction fileAction = new FileAction();
-        public PlatformInfo platformInfo = null;
 
         public Log fileLog = new Log(AppDomain.CurrentDomain.BaseDirectory);
         //public string c = "8899", _investor = "99901110", _investorpass = "686868", _sub1 = "SR801", _sub2 = "m1709";
@@ -45,15 +50,50 @@ namespace HaiFeng
 
         public Trade()
         {
-            // C:\Users\wkjy\Desktop\CTPNET\CTPTest\Debug\
-            root_dir = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
-            HashSet<String> macWhiteList = new HashSet<string>();
-            macWhiteList.Add("3C-F8-62-E9-A5-3A");//Bx
-            macWhiteList.Add("F8-BC-12-78-AC-7A");//Chen
-            macWhiteList.Add("9C-5C-8E-2E-60-7C");//Yu Office 
+            Boolean onWhitelist = this.isOnWhitelist();
+            bool expired = this.isExpired();
 
+            if (onWhitelist && !expired)
+            {
+                InitializeComponent();
+
+                PlatformInfo platformInfo = fileAction.Read(root_dir);
+
+                textBox1.Text = platformInfo.Tcp_ip_quote;
+                textBox2.Text = platformInfo.Tcp_ip_trade;
+                textBox5.Text = platformInfo.Sub;
+                textBox10.Text = platformInfo.Sell_nums;
+                textBox7.Text = platformInfo.First_price;
+                textBox8.Text = platformInfo.Buy_nums;
+                textBox3.Text = platformInfo.Investor;
+                textBox4.Text = platformInfo.Investorpass;
+                textBox9.Text = platformInfo.Broker;
+                this.Refresh();
+            }
+            else
+            {
+                this.fileLog.log("小子你没注册呢？请不要轻易使用，谢谢！");
+                Console.WriteLine("小子你没注册呢？请不要轻易使用，谢谢！");
+            }
+
+        }
+
+        private bool isExpired()
+        {
+            Boolean expired = true;
+            if (DateTime.Now.CompareTo(this.expiryDateTime) < 0)
+            {
+                expired = false;
+            }
+
+            return expired;
+
+        }
+
+        private bool isOnWhitelist()
+        {
+            bool onWhitelist = false;
             MacByIPConfig mbc = new MacByIPConfig();
-            Boolean onWhitelist = false;
             List<String> lt = mbc.GetMacByIPConfig();
             string[] stringSeparators = new string[] { ": " };
             for (int i = 0; i < lt.Count; i++)
@@ -66,35 +106,7 @@ namespace HaiFeng
                     break;
                 }
             }
-            Boolean expired = true;
-            if (DateTime.Now.CompareTo(this.expiryDateTime) < 0)
-            {
-                expired = false;
-            }
-
-            if (onWhitelist && !expired)
-            {
-                InitializeComponent();
-
-                platformInfo = fileAction.Read(root_dir);
-
-                textBox1.Text = platformInfo.Tcp_ip_quote;
-                textBox2.Text = platformInfo.Tcp_ip_trade;
-                textBox5.Text = platformInfo.Sub;
-                textBox10.Text = platformInfo.Sell_nums;
-                textBox7.Text = platformInfo.First_price;
-                textBox8.Text = platformInfo.Buy_nums;
-                textBox3.Text = platformInfo.Investor;
-                textBox4.Text = platformInfo.Investorpass;
-                textBox9.Text = platformInfo.Broker;
-                this.Refresh();
-
-            }
-            else
-            {
-                this.fileLog.log("小子你没注册呢？请不要轻易使用，谢谢！");
-                Console.WriteLine("小子你没注册呢？请不要轻易使用，谢谢！");
-            }
+            return onWhitelist;
 
         }
 
@@ -104,7 +116,7 @@ namespace HaiFeng
             this.loginButton.Visible = false;
             this.logoutButton.Visible = true;
 
-            price_first = textBox7.Text;
+            middlePrice = textBox7.Text;
             sell_nums = textBox10.Text;
             buy_nums = textBox8.Text;
 
@@ -119,12 +131,12 @@ namespace HaiFeng
 
             this.fileLog.log("程序启动............. ");
             Console.WriteLine("程序启动............. ");
-            this.fileLog.log("quote_url： " + quote_url + "\n trade_url" + trade_url + "\n username" + username + "\n password" + password + "\n investorpass" + broker + "\n price_first" + price_first + "\n sub1" + sub1);
-            Console.WriteLine("quote_url： " + quote_url + "\n trade_url" + trade_url + "\n username" + username + "\n password" + password + "\n investorpass" + broker + "\n price_first" + price_first + "\n sub1" + sub1);
+            this.fileLog.log("quote_url： " + quote_url + "\n trade_url" + trade_url + "\n username" + username + "\n password" + password + "\n investorpass" + broker + "\n price_first" + middlePrice + "\n sub1" + sub1);
+            Console.WriteLine("quote_url： " + quote_url + "\n trade_url" + trade_url + "\n username" + username + "\n password" + password + "\n investorpass" + broker + "\n price_first" + middlePrice + "\n sub1" + sub1);
 
 
-            ctpQuote = new CtpQuote(quote_url, trade_url, username, password, broker, price_first, sub1);
-            ctpTrade = new CtpTrade(root_dir,quote_url, trade_url, username, password, broker, price_first, sub1);
+            ctpQuote = new CtpQuote(quote_url, trade_url, username, password, broker, middlePrice, sub1);
+            ctpTrade = new CtpTrade(root_dir,quote_url, trade_url, username, password, broker, middlePrice, sub1);
 
 
             int i = 1;
@@ -262,7 +274,7 @@ namespace HaiFeng
 
         private void button5_Click(object sender, EventArgs e)
         {
-            price_first = textBox7.Text;
+            middlePrice = textBox7.Text;
             timer2.Start();
 
         }
@@ -274,7 +286,7 @@ namespace HaiFeng
             int sell_nums_ar = int.Parse(sell_nums);//卖单挂单数
             int buy_nums_ar = int.Parse(buy_nums);//买单挂单数
 
-            int price_first_int = int.Parse(price_first); //设定中间价
+            int price_first_int = int.Parse(middlePrice); //设定中间价
 
             //卖单下单
             if (sell_nums_ar >= i)
@@ -304,7 +316,7 @@ namespace HaiFeng
         private void initOrderButton_Click(object sender, EventArgs e)
         {
             //保存设置数据
-            platformInfo = new PlatformInfo();
+            PlatformInfo platformInfo = new PlatformInfo();
             platformInfo.Tcp_ip_quote = textBox1.Text.ToString();
             platformInfo.Tcp_ip_trade = textBox2.Text.ToString();
             platformInfo.Sub = textBox5.Text.ToString();
@@ -324,8 +336,8 @@ namespace HaiFeng
                 this.fileLog.log("数据保存成功！");
                 Console.WriteLine("数据保存成功！");
             }
-            price_first = textBox7.Text;
-            int price_first_int = int.Parse(price_first); //设定中间价
+            middlePrice = textBox7.Text;
+            int price_first_int = int.Parse(middlePrice); //设定中间价
 
             sell_nums = textBox10.Text;
             buy_nums = textBox8.Text;
@@ -414,7 +426,7 @@ namespace HaiFeng
 
         private void button7_Click(object sender, EventArgs e)
         {
-            int price_first_int = int.Parse(price_first);
+            int price_first_int = int.Parse(middlePrice);
             ctpTrade.sell_btn_Open(price_first_int + 1);
         }
 
