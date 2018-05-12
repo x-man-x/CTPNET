@@ -164,6 +164,7 @@ namespace HaiFeng
                 List_submit_order += "无";
             }
             this.richTextBox1.Text = Title1 + List_submit_order;
+            this.timer2.Start();
 
         }
 
@@ -189,24 +190,6 @@ namespace HaiFeng
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            string logMessage = "timer1:" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss.fff");
-            //LogSave.log(logMessage);
-            //Console.WriteLine(logMessage);
-            //Thread.Sleep(1000);
-            // todo: revert when trading.
-            //price = 1;
-            if (ctpQuote.NowPrice == null)
-            {
-                logMessage = "[" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss.fff") + "]尚未收到最新价格，略过。";
-                this.fileLog.log(logMessage);
-                Console.WriteLine(logMessage);
-                return;
-            }
-            price = int.Parse(ctpQuote.NowPrice);
-
-            this.textBox6.Text = price.ToString();
-            this.Refresh();
-
             // Console.WriteLine("................开始...................");
 
             //lt_trade = tt._lt_trade;
@@ -272,43 +255,19 @@ namespace HaiFeng
             ctpTrade.sell_btn_Open(double.Parse(price.ToString()) - 1);
         }
 
-        private void button5_Click(object sender, EventArgs e)
-        {
-            middlePrice = textBox7.Text;
-            timer2.Start();
-
-        }
         int i = 1;
         int j = 1;
         int flag = 1;
         private void timer2_Tick(object sender, EventArgs e)
         {
-            int sell_nums_ar = int.Parse(sell_nums);//卖单挂单数
-            int buy_nums_ar = int.Parse(buy_nums);//买单挂单数
-
-            int price_first_int = int.Parse(middlePrice); //设定中间价
-
-            //卖单下单
-            if (sell_nums_ar >= i)
+            if (string.IsNullOrWhiteSpace(this.ctpQuote.NowPrice))
             {
-                this.fileLog.log("卖单" + i + "..." + (price_first_int + i));
-                Console.WriteLine("卖单" + i + "..." + (price_first_int + i));
-                ctpTrade.sell_btn_Open(price_first_int + i);
+                this.textBox6.Text = "未收到";
             }
-
-            //卖单下单
-            if (buy_nums_ar >= i)
+            else
             {
-                this.fileLog.log("卖单" + i + "..." + (price_first_int + i));
-                Console.WriteLine("买单" + i + "..." + (price_first_int - i));
-                ctpTrade.buy_btn_Open(price_first_int - i);
-            }
-
-            i++;
-
-            if (i > sell_nums_ar && i > buy_nums_ar)
-            {
-                timer2.Stop();
+                this.price = int.Parse(this.ctpQuote.NowPrice);
+                this.textBox6.Text = this.ctpQuote.NowPrice;
             }
 
         }
@@ -420,7 +379,7 @@ namespace HaiFeng
                     //  Thread.Sleep(20);
                 }
             }
-            timer1.Start();
+            this.timer1.Start();
             this.initOrderButton.Visible = false;
         }
 

@@ -48,7 +48,6 @@
             this.logoutButton = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -212,7 +211,7 @@
             // 
             // timer1
             // 
-            this.timer1.Interval = 200;
+            this.timer1.Interval = 500;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // logoutButton
@@ -251,21 +250,9 @@
             this.button4.Visible = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
-            // button5
-            // 
-            this.button5.Font = new System.Drawing.Font("宋体", 16F);
-            this.button5.Location = new System.Drawing.Point(330, 620);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(142, 34);
-            this.button5.TabIndex = 19;
-            this.button5.Text = "自动";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Visible = false;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
-            // 
             // timer2
             // 
-            this.timer2.Interval = 20;
+            this.timer2.Interval = 500;
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
             // textBox7
@@ -456,7 +443,6 @@
             this.Controls.Add(this.initialLongOrderCountTextBox);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.textBox7);
-            this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.logoutButton);
@@ -504,7 +490,6 @@
         private System.Windows.Forms.Button logoutButton;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Timer timer2;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox textBox7;
