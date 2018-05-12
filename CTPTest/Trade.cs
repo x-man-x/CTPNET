@@ -61,7 +61,7 @@ namespace HaiFeng
 
                 textBox1.Text = platformInfo.Tcp_ip_quote;
                 textBox2.Text = platformInfo.Tcp_ip_trade;
-                textBox5.Text = platformInfo.Sub;
+                symbolTextBox.Text = platformInfo.Sub;
                 initialShortOrderCountTextBox.Text = platformInfo.Sell_nums;
                 middlePriceTextBox.Text = platformInfo.First_price;
                 initialLongOrderCountTextBox.Text = platformInfo.Buy_nums;
@@ -127,7 +127,7 @@ namespace HaiFeng
             password = textBox4.Text;
 
             broker = textBox9.Text;
-            sub1 = textBox5.Text;
+            sub1 = symbolTextBox.Text;
 
             this.fileLog.log("程序启动............. ");
             Console.WriteLine("程序启动............. ");
@@ -278,7 +278,7 @@ namespace HaiFeng
             PlatformInfo platformInfo = new PlatformInfo();
             platformInfo.Tcp_ip_quote = textBox1.Text.ToString();
             platformInfo.Tcp_ip_trade = textBox2.Text.ToString();
-            platformInfo.Sub = textBox5.Text.ToString();
+            platformInfo.Sub = symbolTextBox.Text.ToString();
 
             platformInfo.Sell_nums = initialShortOrderCountTextBox.Text.ToString();
             platformInfo.First_price = middlePriceTextBox.Text.ToString();
@@ -404,7 +404,7 @@ namespace HaiFeng
 
         }
 
-        private void textBox5_TextChanged(object sender, EventArgs e)
+        private void symbolTextBox_TextChanged(object sender, EventArgs e)
         {
 
         }

@@ -40,7 +40,7 @@
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.symbolTextBox = new System.Windows.Forms.TextBox();
             this.latestPriceTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -169,15 +169,15 @@
             this.label5.TabIndex = 9;
             this.label5.Text = "合约号一：";
             // 
-            // textBox5
+            // symbolTextBox
             // 
-            this.textBox5.Font = new System.Drawing.Font("宋体", 16F);
-            this.textBox5.Location = new System.Drawing.Point(178, 262);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(100, 32);
-            this.textBox5.TabIndex = 10;
-            this.textBox5.Text = "SR805";
-            this.textBox5.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
+            this.symbolTextBox.Font = new System.Drawing.Font("宋体", 16F);
+            this.symbolTextBox.Location = new System.Drawing.Point(178, 262);
+            this.symbolTextBox.Name = "symbolTextBox";
+            this.symbolTextBox.Size = new System.Drawing.Size(100, 32);
+            this.symbolTextBox.TabIndex = 10;
+            this.symbolTextBox.Text = "SR805";
+            this.symbolTextBox.TextChanged += new System.EventHandler(this.symbolTextBox_TextChanged);
             // 
             // latestPriceTextBox
             // 
@@ -449,7 +449,7 @@
             this.Controls.Add(this.label7);
             this.Controls.Add(this.latestPriceTextBox);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.symbolTextBox);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.textBox4);
             this.Controls.Add(this.textBox3);
@@ -481,7 +481,7 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox symbolTextBox;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox latestPriceTextBox;
         private System.Windows.Forms.Label label6;
