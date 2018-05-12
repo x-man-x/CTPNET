@@ -262,12 +262,12 @@ namespace HaiFeng
         {
             if (string.IsNullOrWhiteSpace(this.ctpQuote.NowPrice))
             {
-                this.textBox6.Text = "未收到";
+                this.latestPriceTextBox.Text = "未收到";
             }
             else
             {
                 this.price = int.Parse(this.ctpQuote.NowPrice);
-                this.textBox6.Text = this.ctpQuote.NowPrice;
+                this.latestPriceTextBox.Text = this.ctpQuote.NowPrice;
             }
 
         }

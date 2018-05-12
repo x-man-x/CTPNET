@@ -41,7 +41,7 @@
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.latestPriceTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -179,16 +179,16 @@
             this.textBox5.Text = "SR805";
             this.textBox5.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
             // 
-            // textBox6
+            // latestPriceTextBox
             // 
-            this.textBox6.Font = new System.Drawing.Font("宋体", 16F);
-            this.textBox6.ForeColor = System.Drawing.Color.Red;
-            this.textBox6.Location = new System.Drawing.Point(178, 367);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(230, 32);
-            this.textBox6.TabIndex = 12;
-            this.textBox6.Text = "0";
-            this.textBox6.TextChanged += new System.EventHandler(this.textBox6_TextChanged);
+            this.latestPriceTextBox.Font = new System.Drawing.Font("宋体", 16F);
+            this.latestPriceTextBox.ForeColor = System.Drawing.Color.Red;
+            this.latestPriceTextBox.Location = new System.Drawing.Point(178, 367);
+            this.latestPriceTextBox.Name = "latestPriceTextBox";
+            this.latestPriceTextBox.Size = new System.Drawing.Size(230, 32);
+            this.latestPriceTextBox.TabIndex = 12;
+            this.latestPriceTextBox.Text = "0";
+            this.latestPriceTextBox.TextChanged += new System.EventHandler(this.textBox6_TextChanged);
             // 
             // label6
             // 
@@ -447,7 +447,7 @@
             this.Controls.Add(this.button3);
             this.Controls.Add(this.logoutButton);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.textBox6);
+            this.Controls.Add(this.latestPriceTextBox);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.textBox5);
             this.Controls.Add(this.label5);
@@ -483,7 +483,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox latestPriceTextBox;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Timer timer1;
