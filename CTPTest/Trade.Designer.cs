@@ -52,13 +52,13 @@
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.initialLongOrderCountTextBox = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.initOrderButton = new System.Windows.Forms.Button();
             this.textBox9 = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.button7 = new System.Windows.Forms.Button();
-            this.textBox10 = new System.Windows.Forms.TextBox();
+            this.initialShortOrderCountTextBox = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -287,14 +287,14 @@
             this.label8.TabIndex = 21;
             this.label8.Text = "中间价格：";
             // 
-            // textBox8
+            // initialLongOrderCountTextBox
             // 
-            this.textBox8.Font = new System.Drawing.Font("宋体", 16F);
-            this.textBox8.Location = new System.Drawing.Point(178, 501);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(135, 32);
-            this.textBox8.TabIndex = 22;
-            this.textBox8.Text = "50";
+            this.initialLongOrderCountTextBox.Font = new System.Drawing.Font("宋体", 16F);
+            this.initialLongOrderCountTextBox.Location = new System.Drawing.Point(178, 501);
+            this.initialLongOrderCountTextBox.Name = "initialLongOrderCountTextBox";
+            this.initialLongOrderCountTextBox.Size = new System.Drawing.Size(135, 32);
+            this.initialLongOrderCountTextBox.TabIndex = 22;
+            this.initialLongOrderCountTextBox.Text = "50";
             // 
             // label9
             // 
@@ -349,15 +349,15 @@
             this.button7.Visible = false;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
-            // textBox10
+            // initialShortOrderCountTextBox
             // 
-            this.textBox10.Font = new System.Drawing.Font("宋体", 16F);
-            this.textBox10.Location = new System.Drawing.Point(178, 409);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(135, 32);
-            this.textBox10.TabIndex = 28;
-            this.textBox10.Text = "50";
-            this.textBox10.TextChanged += new System.EventHandler(this.textBox10_TextChanged);
+            this.initialShortOrderCountTextBox.Font = new System.Drawing.Font("宋体", 16F);
+            this.initialShortOrderCountTextBox.Location = new System.Drawing.Point(178, 409);
+            this.initialShortOrderCountTextBox.Name = "initialShortOrderCountTextBox";
+            this.initialShortOrderCountTextBox.Size = new System.Drawing.Size(135, 32);
+            this.initialShortOrderCountTextBox.TabIndex = 28;
+            this.initialShortOrderCountTextBox.Text = "50";
+            this.initialShortOrderCountTextBox.TextChanged += new System.EventHandler(this.textBox10_TextChanged);
             // 
             // label11
             // 
@@ -447,13 +447,13 @@
             this.Controls.Add(this.label12);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.textBox10);
+            this.Controls.Add(this.initialShortOrderCountTextBox);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.textBox9);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.initOrderButton);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.textBox8);
+            this.Controls.Add(this.initialLongOrderCountTextBox);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.textBox7);
             this.Controls.Add(this.button5);
@@ -509,13 +509,13 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox textBox7;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.TextBox initialLongOrderCountTextBox;
         private System.Windows.Forms.Button initOrderButton;
         private System.Windows.Forms.TextBox textBox9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox textBox10;
+        private System.Windows.Forms.TextBox initialShortOrderCountTextBox;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Button testSaveOpenOrdersButton;

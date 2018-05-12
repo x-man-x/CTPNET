@@ -62,9 +62,9 @@ namespace HaiFeng
                 textBox1.Text = platformInfo.Tcp_ip_quote;
                 textBox2.Text = platformInfo.Tcp_ip_trade;
                 textBox5.Text = platformInfo.Sub;
-                textBox10.Text = platformInfo.Sell_nums;
+                initialShortOrderCountTextBox.Text = platformInfo.Sell_nums;
                 textBox7.Text = platformInfo.First_price;
-                textBox8.Text = platformInfo.Buy_nums;
+                initialLongOrderCountTextBox.Text = platformInfo.Buy_nums;
                 textBox3.Text = platformInfo.Investor;
                 textBox4.Text = platformInfo.Investorpass;
                 textBox9.Text = platformInfo.Broker;
@@ -117,8 +117,8 @@ namespace HaiFeng
             this.logoutButton.Visible = true;
 
             middlePrice = textBox7.Text;
-            sell_nums = textBox10.Text;
-            buy_nums = textBox8.Text;
+            sell_nums = initialShortOrderCountTextBox.Text;
+            buy_nums = initialLongOrderCountTextBox.Text;
 
             quote_url = textBox1.Text;
             trade_url = textBox2.Text;
@@ -321,9 +321,9 @@ namespace HaiFeng
             platformInfo.Tcp_ip_trade = textBox2.Text.ToString();
             platformInfo.Sub = textBox5.Text.ToString();
 
-            platformInfo.Sell_nums = textBox10.Text.ToString();
+            platformInfo.Sell_nums = initialShortOrderCountTextBox.Text.ToString();
             platformInfo.First_price = textBox7.Text.ToString();
-            platformInfo.Buy_nums = textBox8.Text.ToString();
+            platformInfo.Buy_nums = initialLongOrderCountTextBox.Text.ToString();
 
             platformInfo.Investor = textBox3.Text.ToString();
             platformInfo.Investorpass = textBox4.Text.ToString();
@@ -339,8 +339,8 @@ namespace HaiFeng
             middlePrice = textBox7.Text;
             int price_first_int = int.Parse(middlePrice); //设定中间价
 
-            sell_nums = textBox10.Text;
-            buy_nums = textBox8.Text;
+            sell_nums = initialShortOrderCountTextBox.Text;
+            buy_nums = initialLongOrderCountTextBox.Text;
 
             int sell_nums_ar = int.Parse(sell_nums);//卖单挂单数
             int buy_nums_ar = int.Parse(buy_nums);//买单挂单数
