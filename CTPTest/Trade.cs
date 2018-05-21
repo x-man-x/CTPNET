@@ -255,9 +255,9 @@ namespace HaiFeng
             ctpTrade.sell_btn_Open(double.Parse(price.ToString()) - 1);
         }
 
-        int i = 1;
-        int j = 1;
-        int flag = 1;
+//        int i = 1;
+//        int j = 1;
+//        int flag = 1;
         private void timer2_Tick(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(this.ctpQuote.NowPrice))
