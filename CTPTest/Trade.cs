@@ -16,7 +16,7 @@ namespace HaiFeng
 {
     public partial class Trade : Form
     {
-        private DateTime expiryDateTime = new DateTime(2018, 5, 30, 23, 59, 59);
+        private DateTime expiryDateTime = new DateTime(2018, 7, 1, 0, 0, 0);
         private HashSet<String> macWhiteList = new HashSet<string> {
             "3C-F8-62-E9-A5-3A",//Bx
             "F8-BC-12-78-AC-7A",//Chen
