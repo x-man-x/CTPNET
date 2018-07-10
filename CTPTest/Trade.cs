@@ -17,14 +17,15 @@ namespace HaiFeng
     public partial class Trade : Form
     {
         private DateTime expiryDateTime = new DateTime(2018, 9, 1, 0, 0, 0);
-        private HashSet<String> macWhiteList = new HashSet<string> {
+        private HashSet<String> macWhiteList = new HashSet<String> {
             "54-BF-64-11-02-26",//Bx
-            "F8-BC-12-78-AC-7A",//Chen
+            "F8-BC-12-78-AC-7A",//Chen eth
+            "00-0A-F7-4C-09-E0",//Chen eth2
             "9C-5C-8E-2E-60-7C"//Yu Office 
         };
         //合约价格
         private int price = 0;
-        private String middlePrice = null;//中间价 后面设置  6163
+        private String middlePrice = null;//中间价 
         private String sell_nums = null;
         private String buy_nums = null;
         private String quote_url = null;
@@ -100,7 +101,7 @@ namespace HaiFeng
             {
                 String mac_temp = lt[i].ToString().Split(stringSeparators, StringSplitOptions.None)[1];
                 //Console.WriteLine(mac_temp);
-                if (macWhiteList.Contains(mac_temp))
+                if (macWhiteList.Contains(mac_temp.ToUpper()))
                 {
                     onWhitelist = true;
                     break;
